@@ -1,0 +1,697 @@
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@700&family=Nunito:wght@400;600;700&display=swap'); /* New Fonts: Exo 2 for Headers, Nunito for Body */
+
+:root {
+    /* New Color Scheme */
+    --background-color: #121212;
+    --text-color: #e0e0e0; /* Keep general text light */
+    --header-text-color: #C0C0C0;
+    --primary-accent: #FF4500; /* Button background, main glow */
+    --primary-accent-hover: #FF1E56; /* Button hover */
+    --secondary-accent: #ff6347; /* Lighter orange for secondary glow */
+    --link-color: #00E5FF; /* Cyan links */
+    --card-background: #2A2A2A;
+    --border-color: #444;
+    
+    /* Font Variables */
+    --font-primary: 'Nunito', sans-serif; /* Changed to Nunito */
+    --font-headings: 'Exo 2', sans-serif; /* Added Exo 2 */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-primary); /* Apply Nunito to body */
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.7; /* Slightly increased line height */
+    font-size: 16px; /* Ensure base font size is reasonable */
+}
+
+h1, h2, h3, h4 {
+    font-family: var(--font-headings); /* Apply Exo 2 to headers */
+    font-weight: 700;
+    margin-bottom: 1.2rem; /* Adjusted spacing */
+    color: var(--primary-accent); /* Use primary accent for headers */
+    letter-spacing: 0.5px;
+    /* Prevent highlighting */
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE/Edge */
+    user-select: none; /* Standard syntax */
+}
+
+h1 {
+    font-size: 3em; /* Slightly larger H1 */
+}
+
+h2 {
+    font-size: 2.4em;
+    margin-top: 3rem;
+}
+
+h3 {
+    font-size: 1.6em;
+    color: var(--secondary-accent); /* Use secondary accent for H3 */
+}
+
+a {
+    color: var(--link-color);
+    text-decoration: none;
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+
+a:hover {
+    color: var(--primary-accent);
+    /* text-decoration: underline; Consider adding underline on hover */
+}
+
+p {
+    margin-bottom: 1rem; /* Add default spacing below paragraphs */
+    max-width: 75ch; /* Limit paragraph width for readability */
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+ul {
+    list-style: none;
+}
+
+/* Header & Navigation */
+header {
+    background-color: rgba(18, 18, 18, 0.85); /* Slightly transparent dark */
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    padding: 1rem 5%;
+    border-bottom: 1px solid var(--border-color);
+    backdrop-filter: blur(8px);
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav .logo {
+    height: 55px; /* Slightly larger logo */
+    transition: transform 0.3s ease;
+}
+nav .logo:hover {
+    transform: scale(1.1); /* Logo hover animation */
+}
+
+nav ul {
+    display: flex;
+    gap: 2rem; /* Increased gap */
+}
+
+nav ul li a {
+    color: var(--header-text-color); /* Use header text color */
+    font-weight: 600;
+    padding: 0.5rem 0;
+    position: relative;
+    transition: color 0.3s ease; /* Add transition for color change */
+}
+
+nav ul li a:hover {
+     color: var(--link-color); /* Change to link color on hover */
+}
+
+/* Underline effect for nav links */
+nav ul li a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 3px; /* Thicker underline */
+    bottom: -5px; /* Position slightly below */
+    left: 0;
+    background-color: var(--link-color); /* Use link color for underline */
+    transition: width 0.4s ease; /* Slightly slower transition */
+}
+
+nav ul li a:hover::after {
+    width: 100%;
+}
+
+/* Main Content Area */
+main {
+    padding-top: 90px; /* Adjust based on header height */
+}
+
+section {
+    padding: 4rem 5%;
+}
+
+section:not(:last-of-type) {
+    padding-bottom: 4rem;
+}
+section#home {
+     padding: 0 5%;
+     margin-bottom: 0;
+}
+
+/* Homepage Banner */
+#home {
+    min-height: calc(100vh - 90px);
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: linear-gradient(rgba(18, 18, 18, 0.9), rgba(18, 18, 18, 0.95)); /* Darker overlay */
+    padding-top: 0;
+    margin-bottom: 0;
+}
+
+#home .banner h1 {
+    margin-bottom: 1.5rem;
+    transition: transform 0.3s ease;
+}
+
+#home .banner h1:hover {
+    transform: scale(1.03); /* Subtle scale on hover */
+}
+
+#home .banner p {
+    font-size: 1.25em; /* Slightly larger intro text */
+    margin-bottom: 2.5rem;
+    max-width: 650px;
+    margin-left: auto;
+    margin-right: auto;
+    color: var(--header-text-color); /* Lighter text for intro */
+    /* Prevent highlighting */
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE/Edge */
+    user-select: none; /* Standard syntax */
+}
+
+/* Glowing Text Effect (Original - Keep for other potential uses) */
+.glowing-text {
+    text-shadow: 0 0 6px var(--primary-accent),
+                 0 0 12px var(--primary-accent),
+                 0 0 18px var(--secondary-accent),
+                 0 0 24px var(--secondary-accent);
+    transition: text-shadow 0.3s ease;
+}
+
+.glowing-text:hover {
+     text-shadow: 0 0 8px var(--primary-accent),
+                 0 0 16px var(--primary-accent),
+                 0 0 24px var(--secondary-accent),
+                 0 0 32px var(--secondary-accent); /* Intensify glow */
+}
+
+/* New Title Effect for H1 Banner */
+#home .banner h1 .glowing-text { /* Target specifically */
+    background: linear-gradient(90deg, var(--primary-accent), var(--secondary-accent), var(--primary-accent)); /* Orange-Red-Orange Gradient */
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-fill-color: transparent;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.6); /* Subtle dark shadow for depth */
+    background-size: 200% auto; /* For potential animation */
+    animation: gradient-shine 5s linear infinite; /* Add subtle animation */
+    transition: none; /* Override basic glow transition */
+    /* Prevent highlighting */
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE/Edge */
+    user-select: none; /* Standard syntax */
+}
+
+#home .banner h1 .glowing-text:hover {
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.6); /* Keep consistent shadow on hover */
+    /* Optional: Slightly intensify animation or gradient on hover if desired */
+}
+
+@keyframes gradient-shine {
+    0% { background-position: 0% center; }
+    50% { background-position: 100% center; }
+    100% { background-position: 0% center; }
+}
+
+/* Call-to-Action Button */
+.cta-button {
+    display: inline-block;
+    padding: 0.9rem 2rem; /* Slightly larger padding */
+    background-color: var(--primary-accent);
+    color: #ffffff; /* White text on button */
+    border: none;
+    border-radius: 8px;
+    font-weight: 700; /* Bolder text */
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px; /* More spacing */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Base shadow */
+}
+
+.cta-button:hover {
+    background-color: var(--primary-accent-hover);
+    transform: translateY(-4px) scale(1.03); /* Lift and scale */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4); /* Increased shadow on hover */
+}
+
+/* Glowing Border Effect (for specific buttons) */
+.glowing-border {
+    border: 2px solid var(--primary-accent);
+    box-shadow: 0 0 10px var(--primary-accent),
+                inset 0 0 10px var(--primary-accent);
+    animation: glow 1.5s infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        box-shadow: 0 0 6px var(--primary-accent),
+                    inset 0 0 6px var(--primary-accent);
+    }
+    to {
+        box-shadow: 0 0 18px var(--secondary-accent),
+                    inset 0 0 18px var(--secondary-accent);
+    }
+}
+
+/* About Section */
+#about blockquote {
+    border-left: 5px solid var(--primary-accent);
+    padding-left: 1.5rem;
+    margin: 1.5rem 0;
+    font-style: italic;
+    color: var(--header-text-color); /* Lighter quote text */
+    font-size: 1.1em;
+    /* Prevent highlighting */
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE/Edge */
+    user-select: none; /* Standard syntax */
+}
+
+/* How It Works - Timeline */
+#how-it-works .timeline {
+    list-style: none;
+    padding-left: 2rem; /* Increased padding */
+    position: relative;
+    max-width: 600px; /* Limit width */
+    margin: 2rem auto; /* Center timeline */
+}
+
+#how-it-works .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 5px;
+    bottom: 5px;
+    width: 3px; /* Thicker line */
+    background-color: var(--primary-accent);
+    border-radius: 3px;
+}
+
+#how-it-works .timeline li {
+    margin-bottom: 2rem; /* Increased spacing */
+    padding-left: 1.5rem; /* Adjusted padding */
+    position: relative;
+    font-size: 1.1em;
+}
+
+#how-it-works .timeline li::before {
+    content: '';
+    position: absolute;
+    left: -2rem; /* Align with the main line */
+    top: 5px; /* Adjust vertical alignment */
+    width: 15px; /* Larger dot */
+    height: 15px;
+    background-color: var(--secondary-accent);
+    border-radius: 50%;
+    border: 3px solid var(--background-color);
+    box-shadow: 0 0 5px var(--secondary-accent);
+}
+
+/* Card Base Styles */
+.card {
+    background-color: var(--card-background);
+    border-radius: 10px; /* Smoother radius */
+    border: 1px solid var(--border-color);
+    padding: 2rem; /* Consistent padding */
+    margin-bottom: 1.5rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    border-left: 4px solid transparent; /* Placeholder for hover effect */
+}
+
+.card:hover {
+    transform: translateY(-5px); /* Lift card */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3); /* Enhanced shadow */
+    border-color: var(--primary-accent); /* Orange border */
+    border-left: 4px solid var(--secondary-accent); /* Accent on left */
+}
+
+/* FAQ Section */
+#faq .faq-item {
+    /* Inherit from .card or apply similar styles if not using .card class */
+    background-color: var(--card-background);
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+#faq .faq-item:hover {
+     transform: translateY(-3px);
+     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.25);
+     border-color: var(--primary-accent);
+}
+
+
+#faq .faq-question {
+    background: none;
+    border: none;
+    color: var(--header-text-color); /* Lighter question text */
+    padding: 1.2rem 1.5rem;
+    width: 100%;
+    text-align: left;
+    font-size: 1.15em; /* Slightly larger */
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s ease;
+}
+
+#faq .faq-question:hover {
+    background-color: rgba(255, 69, 0, 0.08); /* Subtle orange hover */
+    color: var(--text-color); /* Brighten text slightly */
+}
+
+#faq .faq-question::after {
+    content: '+';
+    font-size: 1.8em; /* Larger indicator */
+    transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Bouncy transition */
+    color: var(--primary-accent);
+}
+
+#faq .faq-item.active .faq-question::after {
+    transform: rotate(135deg); /* Spin indicator */
+}
+
+#faq .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out, padding 0.5s ease-out; /* Smoother transition */
+    padding: 0 1.5rem;
+    color: #b0b0b0; /* Slightly dimmer answer text */
+}
+#faq .faq-item.active .faq-answer {
+     padding: 0 1.5rem 1.5rem 1.5rem;
+}
+
+#faq .faq-answer p {
+    margin: 0;
+    padding-bottom: 0; /* Remove default p margin inside answer */
+    line-height: 1.6;
+}
+
+/* Team Section */
+#team .team-group {
+     /* Use .card styles */
+    background-color: var(--card-background);
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    padding: 2rem;
+    margin-bottom: 2rem; /* Increase spacing between groups */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    border-left: 4px solid transparent;
+}
+
+#team .team-group:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    border-color: var(--primary-accent); 
+    border-left: 4px solid var(--secondary-accent); 
+}
+
+
+#team .team-group h3 {
+    color: var(--secondary-accent);
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 0.8rem;
+    margin-bottom: 1.5rem;
+}
+
+#team ul {
+    padding-left: 0;
+}
+
+#team ul li {
+    margin-bottom: 0.8rem; /* Increased spacing */
+    font-size: 1.05em;
+}
+
+/* Events Section */
+#events .event-countdown {
+     /* Use .card styles */
+    text-align: center;
+    background-color: var(--card-background);
+    padding: 2.5rem; /* More padding */
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    border-top: 4px solid transparent; /* Add top border for hover */
+}
+
+#events .event-countdown:hover {
+     transform: translateY(-5px);
+     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+     border-color: var(--secondary-accent); /* Lighter orange border */
+     border-top: 4px solid var(--primary-accent); /* Orange top border */
+}
+
+
+#events #countdown-timer {
+    font-size: 2.5em; /* Larger countdown */
+    font-weight: 700;
+    color: var(--primary-accent);
+    margin: 1.5rem 0;
+    text-shadow: 0 0 8px var(--primary-accent);
+}
+
+#events .event-details {
+    text-align: left;
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-color);
+    color: var(--header-text-color); /* Lighter text for details */
+}
+
+#events .event-details h4 {
+    color: var(--secondary-accent);
+    margin-bottom: 1.2rem;
+    font-size: 1.3em;
+}
+
+#events .event-details ul {
+    list-style: disc;
+    padding-left: 30px;
+    margin: 0.5rem 0 1.5rem 0;
+}
+
+#events .event-details li {
+    margin-bottom: 0.5rem;
+}
+
+#events .discord-link {
+    display: inline-block;
+    margin-top: 2rem;
+    padding: 0.8rem 1.5rem;
+    background-color: #5865F2;
+    color: #fff;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#events .discord-link:hover {
+    background-color: #4a54c9;
+    color: #fff;
+    transform: scale(1.05); /* Scale discord link */
+}
+
+/* Community Section */
+#community .community-links {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+#community .community-links .cta-button {
+    margin: 0.8rem;
+    min-width: 190px;
+}
+
+/* Specific button colors - keep as is or adjust if needed */
+#community .cta-button.discord { background-color: #5865F2; color: #fff; }
+#community .cta-button.discord:hover { background-color: #4a54c9; }
+#community .cta-button.twitch { background-color: #9146FF; color: #fff; }
+#community .cta-button.twitch:hover { background-color: #7a3ad9; }
+#community .cta-button.youtube { background-color: #FF0000; color: #fff; }
+#community .cta-button.youtube:hover { background-color: #cc0000; }
+
+
+#community .housing-info,
+#community .boost-perks {
+     /* Use .card styles */
+    background-color: var(--card-background);
+    padding: 2rem;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    margin-top: 2rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+     border-left: 4px solid transparent;
+}
+
+#community .housing-info:hover,
+#community .boost-perks:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    border-color: var(--primary-accent);
+    border-left: 4px solid var(--secondary-accent);
+}
+
+
+#community h3 {
+     color: var(--secondary-accent);
+     margin-bottom: 1rem;
+}
+
+/* Footer */
+footer {
+    background-color: #0a0a0a; /* Slightly darker than main bg */
+    color: #888; /* Dimmer footer text */
+    text-align: center;
+    padding: 2.5rem 5%;
+    margin-top: 4rem;
+    border-top: 1px solid #222;
+    font-size: 0.95em;
+}
+
+footer p {
+    margin-bottom: 0.8rem;
+    max-width: none; /* Allow footer text to span wider */
+}
+
+footer a {
+    color: #aaa; /* Lighter footer links */
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: var(--link-color); /* Use main link color on hover */
+}
+
+/* Placeholders */
+.infographic-placeholder,
+.calendar-placeholder {
+    text-align: center;
+    padding: 4rem;
+    margin-top: 2.5rem;
+    background-color: rgba(42, 42, 42, 0.5); /* Semi-transparent dark background */
+    border: 2px dashed var(--border-color);
+    border-radius: 10px;
+    color: #888;
+}
+
+/* Responsive Design (Basic Example) */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.5em;
+    }
+    h2 {
+        font-size: 2em;
+    }
+     h3 {
+        font-size: 1.4em;
+    }
+    p {
+        max-width: none; /* Remove width limit on small screens */
+    }
+
+    nav ul {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 75px; /* Adjusted for slightly taller header */
+        left: 0;
+        width: 100%;
+        background-color: rgba(18, 18, 18, 0.98);
+        padding: 1rem 0;
+        border-top: 1px solid var(--border-color);
+    }
+    nav ul.active {
+        display: flex;
+    }
+    nav ul li {
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+    /* Add a menu toggle button icon styling here if implemented */
+    /* .menu-toggle { display: block; ... } */
+
+    .card, 
+    #faq .faq-item, 
+    #team .team-group, 
+    #events .event-countdown, 
+    #community .housing-info, 
+    #community .boost-perks {
+         padding: 1.5rem; /* Reduce padding on smaller screens */
+    }
+    #home .banner p {
+        font-size: 1.1em;
+    }
+    .cta-button {
+        padding: 0.8rem 1.5rem;
+        font-size: 1em;
+    }
+    #community .community-links .cta-button {
+        min-width: 150px;
+        margin: 0.5rem;
+    }
+}
+
+/* Optional: Smooth Transitions (Example) */
+/* 
+body {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+body.loaded {
+    opacity: 1;
+}
+*/
+
+/* Apply non-highlighting to all headers and specific paragraphs */
+h1, h2, h3, h4,
+#home .banner p,
+#about blockquote {
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE/Edge */
+    user-select: none; /* Standard syntax */
+} 
