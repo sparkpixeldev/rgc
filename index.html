@@ -230,5 +230,16 @@
     </footer>
 
     <script src="script.js"></script>
+      <!-- Your other content -->
+
+  <!-- Remove URL hash after in-page navigation -->
+  <script>
+    // Wait for navigation to the anchor, then clean the hash
+    window.addEventListener("hashchange", function() {
+      history.replaceState(null, null, window.location.pathname);
+    });
+  </script>
+</body>
+</html>
 </body>
 </html> 
