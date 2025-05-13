@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Event Timezone Conversion (Placeholder) ---
     const eventTimeSpan = document.getElementById('event-time');
     const nextEventDateSpan = document.getElementById('next-event-date');
-    const eventDateEST = new Date('May 4, 2025 13:00:00 EST'); // IMPORTANT: EST is tricky timezone, consider using a library like Moment Timezone or Luxon for robust handling
+    const eventDateEST = new Date('May 17, 2025 12:30:00 EST'); // IMPORTANT: EST is tricky timezone, consider using a library like Moment Timezone or Luxon for robust handling
 
     if (eventTimeSpan && eventDateEST) {
         try {
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error("Error formatting event date:", error);
             // Keep the default EST time if conversion fails
              if (nextEventDateSpan) {
-                nextEventDateSpan.textContent = "May 4th, 2025 @ 1:00 PM EST (Timezone conversion error)";
+                nextEventDateSpan.textContent = "May 17th, 2025 @ 12:300 PM EST (Timezone conversion error)";
              }
         }
     }
