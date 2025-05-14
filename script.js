@@ -40,16 +40,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Event Timezone Conversion (Placeholder) ---
--    // const eventTimeSpan = document.getElementById('event-time');
--    const nextEventDateSpan = document.getElementById('next-event-date');
--    const eventDateEST = new Date('May 17, 2025 12:30:00 EST'); // IMPORTANT: EST is tricky timezone, consider using a library like Moment Timezone or Luxon for robust handling
-+    // We only need the one span for both date and time display
-+    const nextEventDateSpan = document.getElementById('next-event-date');
-+    // Use an unambiguous ISO timestamp (with -05:00 offset for EST)
-+    const eventDateEST = new Date('2025-05-17T12:30:00-05:00');
+    const eventTimeSpan = document.getElementById('event-time');
+    const nextEventDateSpan = document.getElementById('next-event-date');
+    const eventDateEST = new Date('May 17, 2025 12:30:00 EST'); // IMPORTANT: EST is tricky timezone, consider using a library like Moment Timezone or Luxon for robust handling
 
--    if (eventTimeSpan && eventDateEST) {
-+    if (nextEventDateSpan && eventDateEST) {
+    if (eventTimeSpan && eventDateEST) {
         try {
             // Format the date and time according to the user's locale and timezone
             const optionsDate = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -58,25 +53,28 @@ document.addEventListener('DOMContentLoaded', () => {
             const userLocalDate = eventDateEST.toLocaleDateString(undefined, optionsDate);
             const userLocalTime = eventDateEST.toLocaleTimeString(undefined, optionsTime);
 
-            const fullUserDateTime = `${userLocalDate} @ ${userLocalTime}`;
+            const fullUserDateTime = ${userLocalDate} @ ${userLocalTime};
 
-            // Update the events section
--           eventTimeSpan.textContent = userLocalTime;
-            nextEventDateSpan.textContent = fullUserDateTime;
-            
+            // Update the banner and events section
+            eventTimeSpan.textContent = userLocalTime;
+            if (nextEventDateSpan) {
+                 nextEventDateSpan.textContent = fullUserDateTime;
+            }
+           
             // Initial update for the main banner title (more complex if needed)
             const bannerH1 = document.querySelector('#home .banner h1 .glowing-text');
-            if (bannerH1) {
-                bannerH1.innerHTML = `🏆 RGC – ${fullUserDateTime}`;
+            if(bannerH1) {
+                 // Basic update, assumes specific structure
+                 bannerH1.innerHTML = 🏆 RGC #8 – ${fullUserDateTime};
             }
 
         } catch (error) {
             console.error("Error formatting event date:", error);
             // Keep the default EST time if conversion fails
-             nextEventDateSpan.textContent = "May 17, 2025 @ 12:30 PM EST (conversion error)";
+             if (nextEventDateSpan) {
+                nextEventDateSpan.textContent = "May 17th, 2025 @ 12:300 PM EST (Timezone conversion error)";
+             }
         }
-    }
-
     }
 
     // --- Countdown Timer (Placeholder) ---
@@ -101,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
             // Display the result
-            countdownTimerDiv.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            countdownTimerDiv.innerHTML = ${days}d ${hours}h ${minutes}m ${seconds}s;
 
         }, 1000);
     }
