@@ -77,32 +77,33 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- Countdown Timer (Placeholder) ---
-    const countdownTimerDiv = document.getElementById('countdown-timer');
-    const targetDate = eventDateEST.getTime();
+// --- Countdown Timer (fixed) ---
+const countdownTimerDiv = document.getElementById('countdown-timer');
+const targetTimestamp = eventDateEST.getTime();   // milliseconds
 
-    if (countdownTimerDiv && targetDate) {
-        const interval = setInterval(() => {
-            const now = new Date().getTime();
-            const distance = targetDate - now;
+if (countdownTimerDiv && !Number.isNaN(targetTimestamp)) {
+  const updateCountdown = () => {
+    const now       = Date.now();
+    const distance  = targetTimestamp - now;
 
-            if (distance < 0) {
-                clearInterval(interval);
-                countdownTimerDiv.innerHTML = "EVENT IS LIVE OR HAS PASSED!";
-                return;
-            }
-
-            // Time calculations for days, hours, minutes and seconds
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            // Display the result
-            countdownTimerDiv.innerHTML = ${days}d ${hours}h ${minutes}m ${seconds}s;
-
-        }, 1000);
+    if (distance <= 0) {
+      countdownTimerDiv.textContent = "EVENT IS LIVE OR HAS PASSED!";
+      clearInterval(intervalId);
+      return;
     }
+
+    const days    = Math.floor(distance / 86_400_000);              // 1000*60*60*24
+    const hours   = Math.floor((distance % 86_400_000) / 3_600_000);
+    const minutes = Math.floor((distance % 3_600_000) / 60_000);
+    const seconds = Math.floor((distance % 60_000) / 1_000);
+
+    countdownTimerDiv.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+  };
+
+  updateCountdown();                     // run once instantly
+  const intervalId = setInterval(updateCountdown, 1000);
+}
+
 
     // --- Optional: Smooth Page Load Transition ---
     // document.body.classList.add('loaded');
