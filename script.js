@@ -1,120 +1,104 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- FAQ Accordion --- 
+    /* ─────────────────────────────────────
+       FAQ Accordion
+    ───────────────────────────────────── */
     const faqItems = document.querySelectorAll('.faq-item');
 
     faqItems.forEach(item => {
         const questionButton = item.querySelector('.faq-question');
-        const answerDiv = item.querySelector('.faq-answer');
+        const answerDiv      = item.querySelector('.faq-answer');
 
         questionButton.addEventListener('click', () => {
             const isActive = item.classList.contains('active');
 
-            // Close all other items
-            // faqItems.forEach(otherItem => {
-            //     if (otherItem !== item) {
-            //         otherItem.classList.remove('active');
-            //         otherItem.querySelector('.faq-answer').style.maxHeight = null;
-            //         otherItem.querySelector('.faq-answer').style.padding = '0 1.5rem';
-            //     }
-            // });
-
-            // Toggle current item
+            // Toggle this item
             if (isActive) {
                 item.classList.remove('active');
                 answerDiv.style.maxHeight = null;
-                answerDiv.style.padding = '0 1.5rem'; // Reset padding when closing
+                answerDiv.style.padding   = '0 1.5rem';
             } else {
                 item.classList.add('active');
-                // Set padding before calculating scrollHeight for smooth opening
-                answerDiv.style.padding = '0 1.5rem 1rem 1.5rem'; 
-                answerDiv.style.maxHeight = answerDiv.scrollHeight + "px";
+                answerDiv.style.padding   = '0 1.5rem 1rem 1.5rem';
+                answerDiv.style.maxHeight = `${answerDiv.scrollHeight}px`;
             }
         });
     });
 
-    // --- Dynamic Footer Year ---
+    /* ─────────────────────────────────────
+       Dynamic Footer Year
+    ───────────────────────────────────── */
     const currentYearSpan = document.getElementById('current-year');
     if (currentYearSpan) {
         currentYearSpan.textContent = new Date().getFullYear();
     }
 
-    // --- Event Timezone Conversion (Placeholder) ---
-    const eventTimeSpan = document.getElementById('event-time');
-    const nextEventDateSpan = document.getElementById('next-event-date');
-    const eventDateEST = new Date('May 17, 2025 12:30:00 EST'); // IMPORTANT: EST is tricky timezone, consider using a library like Moment Timezone or Luxon for robust handling
+    /* ─────────────────────────────────────
+       Event Date → local timezone
+    ───────────────────────────────────── */
+    const eventTimeSpan     = document.getElementById('event-time');      // optional
+    const nextEventDateSpan = document.getElementById('next-event-date'); // required
+    const eventDateEST      = new Date('May 17, 2025 12:30:00 EST');
 
-    if (eventTimeSpan && eventDateEST) {
-        try {
-            // Format the date and time according to the user's locale and timezone
-            const optionsDate = { year: 'numeric', month: 'long', day: 'numeric' };
-            const optionsTime = { hour: 'numeric', minute: 'numeric', timeZoneName: 'short' };
-            
-            const userLocalDate = eventDateEST.toLocaleDateString(undefined, optionsDate);
-            const userLocalTime = eventDateEST.toLocaleTimeString(undefined, optionsTime);
+    try {
+        const optsDate = { year: 'numeric', month: 'long', day: 'numeric' };
+        const optsTime = { hour: 'numeric', minute: 'numeric', timeZoneName: 'short' };
 
-            const fullUserDateTime = ${userLocalDate} @ ${userLocalTime};
+        const userLocalDate = eventDateEST.toLocaleDateString(undefined, optsDate);
+        const userLocalTime = eventDateEST.toLocaleTimeString(undefined, optsTime);
 
-            // Update the banner and events section
-            eventTimeSpan.textContent = userLocalTime;
-            if (nextEventDateSpan) {
-                 nextEventDateSpan.textContent = fullUserDateTime;
-            }
-           
-            // Initial update for the main banner title (more complex if needed)
-            const bannerH1 = document.querySelector('#home .banner h1 .glowing-text');
-            if(bannerH1) {
-                 // Basic update, assumes specific structure
-                 bannerH1.innerHTML = 🏆 RGC #8 – ${fullUserDateTime};
-            }
+        const fullUserDateTime = `${userLocalDate} @ ${userLocalTime}`;
 
-        } catch (error) {
-            console.error("Error formatting event date:", error);
-            // Keep the default EST time if conversion fails
-             if (nextEventDateSpan) {
-                nextEventDateSpan.textContent = "May 17th, 2025 @ 12:300 PM EST (Timezone conversion error)";
-             }
+        if (eventTimeSpan)       eventTimeSpan.textContent     = userLocalTime;
+        if (nextEventDateSpan)   nextEventDateSpan.textContent = fullUserDateTime;
+
+        // Also update the banner title
+        const bannerGlowingText = document.querySelector('#home .banner h1 .glowing-text');
+        if (bannerGlowingText) {
+            bannerGlowingText.innerHTML = `🏆 RGC #8 – ${fullUserDateTime}`;
+        }
+
+    } catch (err) {
+        console.error('Error formatting event date:', err);
+        if (nextEventDateSpan) {
+            nextEventDateSpan.textContent = 'May 17, 2025 @ 12:30 PM EST (Time-zone conversion error)';
         }
     }
 
-// --- Countdown Timer (fixed) ---
-const countdownTimerDiv = document.getElementById('countdown-timer');
-const targetTimestamp = eventDateEST.getTime();   // milliseconds
+    /* ─────────────────────────────────────
+       Countdown Timer
+    ───────────────────────────────────── */
+    const countdownTimerDiv = document.getElementById('countdown-timer');
+    const targetTimestamp   = eventDateEST.getTime();
 
-if (countdownTimerDiv && !Number.isNaN(targetTimestamp)) {
-  const updateCountdown = () => {
-    const now       = Date.now();
-    const distance  = targetTimestamp - now;
+    if (countdownTimerDiv && !Number.isNaN(targetTimestamp)) {
+        const updateCountdown = () => {
+            const now       = Date.now();
+            const distance  = targetTimestamp - now;
 
-    if (distance <= 0) {
-      countdownTimerDiv.textContent = "EVENT IS LIVE OR HAS PASSED!";
-      clearInterval(intervalId);
-      return;
+            if (distance <= 0) {
+                countdownTimerDiv.textContent = 'EVENT IS LIVE OR HAS PASSED!';
+                clearInterval(intervalId);
+                return;
+            }
+
+            const days    = Math.floor(distance / 86_400_000);      // 1000*60*60*24
+            const hours   = Math.floor((distance % 86_400_000) / 3_600_000);
+            const minutes = Math.floor((distance % 3_600_000) /   60_000);
+            const seconds = Math.floor((distance %     60_000) /    1_000);
+
+            countdownTimerDiv.textContent =
+                `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        };
+
+        updateCountdown();                    // run immediately
+        const intervalId = setInterval(updateCountdown, 1000);
     }
 
-    const days    = Math.floor(distance / 86_400_000);              // 1000*60*60*24
-    const hours   = Math.floor((distance % 86_400_000) / 3_600_000);
-    const minutes = Math.floor((distance % 3_600_000) / 60_000);
-    const seconds = Math.floor((distance % 60_000) / 1_000);
+    /* ─────────────────────────────────────
+       (Optional) Mobile-menu toggle, page-load
+       transitions, etc. retain commented-out
+       placeholders from original script.
+    ───────────────────────────────────── */
 
-    countdownTimerDiv.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-  };
-
-  updateCountdown();                     // run once instantly
-  const intervalId = setInterval(updateCountdown, 1000);
-}
-
-
-    // --- Optional: Smooth Page Load Transition ---
-    // document.body.classList.add('loaded');
-
-     // --- Optional: Mobile Menu Toggle (Basic Example) ---
-    // const menuToggle = document.querySelector('.menu-toggle'); // Need to add this button to HTML
-    // const navUl = document.querySelector('nav ul');
-    // if (menuToggle && navUl) {
-    //     menuToggle.addEventListener('click', () => {
-    //         navUl.classList.toggle('active');
-    //     });
-    // }
-
-}); 
+});
