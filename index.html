@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:title" content="Rank Gifting Competitions | RGC on Hypixel" />
+    <meta property="og:description" content="Join Minecraft’s most exciting competition on Hypixel! 🏆 Compete in Rank Gifting Competitions (RGC) for free ranks, cosmetics, and prizes – no signups needed.">
+    <meta property="og:image" content="https://rankgiftingcompetitions.com/rgc_icon.gif" />
+    <meta property="og:url" content="https://rankgiftingcompetitions.com/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Rank Gifting Competitions" />
+    <meta name="theme-color" content="#121212">
+    <meta name="description" content="Join Minecraft’s most exciting competition on Hypixel! Compete in Rank Gifting Competitions (RGC) for free ranks, cosmetics, and prizes – no signups needed.">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Rank Gifting Competitions | RGC on Hypixel">
+    <meta name="twitter:description" content="Win ranks and prizes in community-run Hypixel events. Countdown, details, and how to join.">
+    <meta name="twitter:image" content="https://rankgiftingcompetitions.com/rgc_icon.gif">
+    <title>RGC - Rank Gifting Competitions</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="favicon.png" type="image/png">
+    <!-- Add Font Awesome for icons if needed -->
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> -->
+</head>
+<body>
+    <header>
+        <nav>
+            <img src="new.png" alt="RGC Logo" class="logo">
+            <button class="menu-toggle" aria-label="Toggle navigation" aria-controls="primary-navigation" aria-expanded="false">
+                <span class="menu-bars" aria-hidden="true"></span>
+            </button>
+            <ul id="primary-navigation">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="#team">Team</a></li>
+                <li><a href="#events">Events</a></li>
+                <li><a href="#community">Community</a></li>
+            </ul>
+            <!-- Optional: Dark Mode Toggle -->
+            <!-- <button id="dark-mode-toggle">Toggle Dark Mode</button> -->
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero-banner" style="background-image: url('background.jpg');">
+            <div class="hero-inner">
+                <div class="hero-left">
+                    <div class="season-badge">SEASON 2</div>
+                    <h1 class="hero-title">
+                        <span>RANK GIFTING</span>
+                        <span>COMPETITIONS</span>
+                    </h1>
+                </div>
+                <aside class="hero-right">
+                    <div class="event-card-hero">
+                        <div class="next-label">NEXT EVENT:</div>
+                        <div class="event-date" id="hero-next-event-date">Loading date…</div>
+                        <div class="event-time" id="hero-next-event-time">Loading time…</div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <section id="about">
+            <h2>About RGC</h2>
+            <p>RGC was founded by DeuceyBoy after unlocking the rare MVP++ dark blue rank. Alongside Freshlo, they created RGC to give away ranks in a fun, interactive way.</p>
+            <blockquote>"We wanted to make someone's day, build a community, and have a good reason to log in and play with friends!"</blockquote>
+        </section>
+
+        <section id="how-it-works">
+            <h2>How It Works</h2>
+            <ol class="timeline">
+                <li>Check announcements on Discord</li>
+                <li>Join the Hypixel Housing on the event day/time</li>
+                <li>Compete in mini-games and challenges</li>
+                <li>Win ranks, cosmetics, or other prizes!</li>
+            </ol>
+            <!-- Placeholder for infographic -->
+            <!-- <div class="infographic-placeholder">Visual Timeline/Infographic Coming Soon!</div> -->
+        </section>
+
+        <section id="faq">
+            <h2>FAQ</h2>
+            <div class="faq-item">
+                <button class="faq-question">How did RGC start?</button>
+                <div class="faq-answer">
+                    <p>RGC was founded by DeuceyBoy after unlocking the rare MVP++ dark blue rank. Alongside Freshlo, they created RGC to give away ranks in a fun, interactive way.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">What does RGC stand for?</button>
+                <div class="faq-answer">
+                    <p>RGC stands for Rank Gifting Competitions.</p>
+                </div>
+            </div>
+             <div class="faq-item">
+                <button class="faq-question">How do I play in events?</button>
+                <div class="faq-answer">
+                    <p>Check the announcements on our Discord for event details. On the day of the event, join the specified Hypixel Housing using the command provided in the announcement.</p>
+                </div>
+            </div>
+             <div class="faq-item">
+                <button class="faq-question">Can I apply for staff?</button>
+                <div class="faq-answer">
+                    <p>Staff applications open periodically. Keep an eye on the #announcements channel in our Discord for information on when applications are open and how to apply.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">How can I contact a staff member?</button>
+                <div class="faq-answer">
+                    <p>You can contact staff through our Discord server, either by pinging a staff role in relevant channels or by opening a support ticket.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">What are perks for boosters?</button>
+                <div class="faq-answer">
+                    <p>Boosting our Discord server grants special perks! Check the #boost-perks channel in Discord for a full list of benefits.</p>
+                </div>
+            </div>
+             <div class="faq-item">
+                <button class="faq-question">How do I become a Gifter?</button>
+                <div class="faq-answer">
+                    <p>Information about becoming a Gifter (someone who donates ranks/prizes) can be found in our Discord or by contacting leadership.</p>
+                </div>
+            </div>
+            <!-- Add more FAQ items here -->
+        </section>
+
+        
+        <section id="team">
+            <h2>Meet the Team</h2>
+            <div class="team-group role-definitions">
+                <details>
+                    <summary><h3>Role Definitions</h3></summary>
+                    <div class="rd-content">
+                    <ul>
+                        <li><strong>Admin</strong> - A senior-level member of the All-Around Staff, with the same responsibilities as All-Around Staff.</li>
+                        <li><strong>Staff Manager</strong> - In charge of all lower staff roles with the help of the Co-Owner.</li>
+                        <li><strong>Event Staff</strong> - Moderates the housing world during events.</li>
+                        <li><strong>Discord Staff</strong> - Moderates the Discord Server.</li>
+                        <li><strong>Developer Manager</strong> - In charge of all Developers and development projects, helps code for the housing world.</li>
+                        <li><strong>Developer</strong> - Codes for the housing world.</li>
+                        <li><strong>Builder Manager</strong> - In charge of all Builders and building projects, helps build for the housing world.</li>
+                        <li><strong>Builder</strong> - Builds all necessary event areas for the housing world.</li>
+                        <li><strong>Staff (All-Around)</strong> - Helps moderate Discord, events, and either builds or codes for the housing.</li>
+                        <li><strong>Helper</strong> - Similar to Event Staff, but with less responsibility.</li>
+                        <li><strong>Host</strong> - A temporary role assigned to whoever is currently hosting an event, if not a managing staff member.</li>
+                        <li><strong>Trial Staff</strong> - A new staff member who could be working toward Event Staff, Discord staff, Helper, Builder, or Developer.</li>
+                    </ul>
+                    </div>
+                </details>
+            </div>
+            <div class="team-group leadership">
+                <h3>Leadership</h3>
+                <ul>
+                    <li class="leader-highlight person-deuceyboy"><span class="role-dash">-</span><span class="role-badge owner">Owner</span> <strong>DeuceyBoy</strong> (Discord: 298917946204487683)
+                        <p>Owns everything managed by RGC, including, but not limited to, all RGC housings and RGC’s Discord server.</p>
+                        <p>Manages all logistics.</p>
+                        <p>Manages bookkeeping and records for all events, giveaways, tournaments, and other activities.</p>
+                    </li>
+                    <li class="leader-highlight person-freshlo"><span class="role-dash">-</span><span class="role-badge co-owner">Co-Owner</span> <strong>Freshlo</strong> (Discord: 1115675561356959794)
+                        <p>In charge of hiring for all lower staff positions.</p>
+                        <p>Manages the Rank Gifting Competitions Discord server.</p>
+                        <p>Manages all Housing builds and games.</p>
+                    </li>
+                    <li class="leader-highlight person-sparkpixels"><span class="role-dash">-</span><span class="role-badge manager">Manager</span> <strong>SparkPixels</strong> (Discord: 1161720228129030184)
+                        <p>Manages the Rank Gifting Competitions website.</p>
+                        <p>Temporarily takes over any duties that the current leadership member can’t perform.</p>
+                    </li>
+                </ul>
+            </div>
+            <div class="team-group">
+                <h3>Admins and Discord Managers</h3>
+                <ul>
+                    <li><span class="role-badge admin">Admin</span> W0rrying</li>
+                    <li><span class="role-badge discord-manager">Discord Manager</span> Znb9</li>
+                    <li><span class="role-badge discord-manager">Discord Manager</span> Dork</li>
+                </ul>
+            </div>
+            <div class="team-group">
+                <h3>Staff (Build/Code & Mod)</h3>
+                <ul>
+                    <li><span class="role-badge staff">Staff</span> S3bi</li>
+                    <li><span class="role-badge staff">Staff</span> Shark56</li>
+                    <li><span class="role-badge staff">Staff</span> clapped</li>
+                </ul>
+            </div>
+            <div class="team-group">
+                <h3>Discord Staff</h3>
+                <ul>
+                    <li><span class="role-badge discord-manager">Discord Manager</span> Znb9</li>
+                    <li><span class="role-badge discord-manager">Discord Manager</span> Dork</li>
+                    <li><span class="role-badge discord-staff">Discord Staff</span> ilovmincraft24</li>
+                </ul>
+            </div>
+            <div class="team-group">
+                <h3>Builders</h3>
+                <ul>
+                    <li><span class="role-badge builder-manager">Builder Manager</span> Freshlo <span class="role-badge co-owner">Co-Owner</span></li>
+                    <li><span class="role-badge builder-manager">Builder Manager</span> S3bi <span class="role-badge staff">Staff</span></li>
+                    <li><span class="role-badge builder">Builder</span> swuzz</li>
+                    <li><span class="role-badge builder">Builder</span> LukeMolar</li>
+                    <li><span class="role-badge builder">Builder</span> SpasticCat</li>
+                    <li><span class="role-badge builder">Builder</span> crqma</li>
+                    <li><span class="role-badge builder">Builder</span> TremmerY</li>
+                    <li><span class="role-badge builder">Builder</span> glso <span class="role-badge developer">Developer</span></li>
+                    <li><span class="role-badge builder">Builder</span> clapped <span class="role-badge staff">Staff</span></li>
+                </ul>
+            </div>
+            <div class="team-group">
+                <h3>Developers</h3>
+                <ul>
+                    <li><span class="role-badge developer-manager">Developer Manager</span> W0rrying <span class="role-badge admin">Admin</span></li>
+                    <li><span class="role-badge head-developer">Head Developer</span> SparkPixels <span class="role-badge manager">Manager</span></li>
+                    <li><span class="role-badge head-developer">Head Developer</span> glso</li>
+                    <li><span class="role-badge developer">Developer</span> clapped <span class="role-badge staff">Staff</span></li>
+                    <li><span class="role-badge developer">Developer</span> Shark56 <span class="role-badge staff">Staff</span></li>
+                    <li><span class="role-badge developer">Developer</span> Eldion</li>
+                </ul>
+            </div>
+            <div class="team-group">
+                <h3>Moderators</h3>
+                <ul>
+                    <li><span class="role-badge moderator">Moderator</span> ilovmincraft24 <span class="role-badge discord-staff">Discord Staff</span></li>
+                    <li><span class="role-badge moderator">Moderator</span> Pugador</li>
+                    <li><span class="role-badge moderator">Moderator</span> Audio</li>
+                </ul>
+            </div>
+            <div class="team-group">
+                <h3>Trial Staff Team</h3>
+                <ul>
+                    <li>-</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Updated Events Section -->
+        <section id="events" data-no-event="true">
+            <h2>Upcoming Events</h2>
+            <div class="event-countdown">
+                <h3>Not currently scheduled</h3>
+                <p><em>Last event: October 12, 2025</em></p>
+                <a href="https://discord.gg/ugrGRywKxv" target="_blank" rel="noopener noreferrer" class="discord-link">Join our Discord for announcements</a>
+            </div>
+        </section>
+
+        <section id="community">
+            <h2>Join the Community</h2>
+             <div class="community-links">
+                <a href="https://discord.gg/ugrGRywKxv" target="_blank" rel="noopener noreferrer" class="cta-button discord">Join Discord</a>
+                <a href="https://www.twitch.tv/boydeucey" target="_blank" rel="noopener noreferrer" class="cta-button twitch">Follow on Twitch</a>
+                <a href="https://www.youtube.com/@deuceyboy9367" target="_blank" rel="noopener noreferrer" class="cta-button youtube">Follow on YouTube</a>
+            </div>
+            <div class="housing-info">
+                <h3>Hypixel Housing</h3>
+                <p>Join us for events! Use the command: <strong>/visit DeuceyBoy</strong> in the Hypixel Housing Lobby.</p>
+                <p>Full instructions will be posted in Discord before each event.</p>
+            </div>
+            <div class="boost-perks">
+                 <h3>Discord Boost Perks</h3>
+                 <p>Boost our server for awesome rewards! Check #boost-perks in Discord.</p>
+                 <!-- List perks here -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; <span id="current-year"></span> RGC - Rank Gifting Competitions. All Rights Reserved.</p>
+        <p>Website develope and maintained by SparkPixel - <a href="https://github.com/sparkpixeldev" target="_blank" rel="noopener noreferrer">GitHub</a></p>
+        <p>Need help? Contact us via our <a href="https://discord.gg/ugrGRywKxv" target="_blank" rel="noopener noreferrer">Discord Ticket System</a>.</p>
+    </footer>
+    
+    <button id="back-to-top" aria-label="Back to top" title="Back to top">↑</button>
+
+    <script src="script.js"></script>
+      <!-- Your other content -->
+
+  <!-- Remove URL hash after in-page navigation -->
+  <script>
+    // Wait for navigation to the anchor, then clean the hash
+    window.addEventListener("hashchange", function() {
+      history.replaceState(null, null, window.location.pathname);
+    });
+  </script>
+</body>
+</html>

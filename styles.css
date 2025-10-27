@@ -1,0 +1,1439 @@
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@700&family=Nunito:wght@400;600;700&display=swap'); /* New Fonts: Exo 2 for Headers, Nunito for Body */
+
+/* Ensure CSS variables apply correctly */
+:root {
+    /* New Color Scheme */
+    --background-color: #121212;
+    --text-color: #e0e0e0; /* Keep general text light */
+    --header-text-color: #C0C0C0;
+    --primary-accent: #FF4500; /* Button background, main glow */
+    --primary-accent-hover: #FF1E56; /* Button hover */
+    --secondary-accent: #ff6347; /* Lighter orange for secondary glow */
+    --link-color: #00E5FF; /* Cyan links */
+    --card-background: #2A2A2A;
+    --border-color: #444;
+    
+    /* Font Variables */
+    --font-primary: 'Nunito', sans-serif; /* Changed to Nunito */
+    --font-headings: 'Exo 2', sans-serif; /* Added Exo 2 */
+    /* Motion */
+    --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --dur-fast: 160ms;
+    --dur-med: 320ms;
+    --dur-slow: 640ms;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-primary); /* Apply Nunito to body */
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.7; /* Slightly increased line height */
+    font-size: 16px; /* Ensure base font size is reasonable */
+    overflow-x: hidden; /* prevent horizontal scroll on mobile */
+}
+body.loaded main { opacity: 1; transform: none; }
+
+h1, h2, h3, h4 {
+    font-family: var(--font-headings); /* Apply Exo 2 to headers */
+    font-weight: 700;
+    margin-bottom: 1.2rem; /* Adjusted spacing */
+    color: var(--primary-accent); /* Use primary accent for headers */
+    letter-spacing: 0.5px;
+    /* Prevent highlighting */
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE/Edge */
+    user-select: none; /* Standard syntax */
+}
+
+h1 {
+    font-size: 3em; /* Slightly larger H1 */
+}
+
+h2 {
+    font-size: 2.4em;
+    margin-top: 3rem;
+}
+
+h3 {
+    font-size: 1.6em;
+    color: var(--secondary-accent); /* Use secondary accent for H3 */
+}
+
+a {
+    color: var(--link-color);
+    text-decoration: none;
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+
+a:hover {
+    color: var(--primary-accent);
+    /* text-decoration: underline; Consider adding underline on hover */
+}
+
+p {
+    margin-bottom: 1rem; /* Add default spacing below paragraphs */
+    max-width: 75ch; /* Limit paragraph width for readability */
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+ul {
+    list-style: none;
+}
+
+/* Layout container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Header & Navigation */
+header {
+    background: linear-gradient(90deg, #ff6a00 0%, #ff3d00 100%);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    padding: 1rem 5%;
+    border-bottom: none;
+    backdrop-filter: none;
+    pointer-events: auto;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+nav .logo {
+    height: 55px; /* Slightly larger logo */
+    transition: transform 0.25s ease;
+    position: absolute;
+    left: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+nav .logo:hover {
+    transform: translateY(-50%) scale(1.03); /* Much subtler hover, preserves position */
+}
+
+/* Hamburger Toggle */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: 1px solid var(--border-color);
+    color: var(--header-text-color);
+    padding: 0.5rem 0.65rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+.menu-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.04);
+    border-color: var(--primary-accent);
+}
+.menu-bars {
+    display: inline-block;
+    width: 22px;
+    height: 2px;
+    background-color: var(--header-text-color);
+    position: relative;
+}
+.menu-bars::before,
+.menu-bars::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 22px;
+    height: 2px;
+    background-color: var(--header-text-color);
+    transition: transform 0.3s ease, top 0.3s ease, opacity 0.3s ease;
+}
+.menu-bars::before { top: -6px; }
+.menu-bars::after { top: 6px; }
+
+/* Active state transforms into an X */
+.menu-toggle[aria-expanded="true"] .menu-bars {
+    background-color: transparent;
+}
+.menu-toggle[aria-expanded="true"] .menu-bars::before {
+    top: 0;
+    transform: rotate(45deg);
+}
+.menu-toggle[aria-expanded="true"] .menu-bars::after {
+    top: 0;
+    transform: rotate(-45deg);
+}
+
+nav ul {
+    display: flex;
+    gap: 2rem; /* Increased gap */
+}
+
+nav ul li a {
+    color: #ffffff;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    padding: 0.5rem 0;
+    position: relative;
+    transition: color 0.3s ease; /* Add transition for color change */
+}
+
+nav ul li a:hover { color: #ffe6d6; /* Subtle tint on hover */ }
+nav ul li a { transition: color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out); }
+nav ul li a:hover { transform: translateY(-1px); }
+
+/* Underline effect for nav links */
+nav ul li a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 3px; /* Thicker underline */
+    bottom: -5px; /* Position slightly below */
+    left: 0;
+    background-color: #ffffff; /* White underline to match header */
+    transition: width 0.4s ease; /* Slightly slower transition */
+}
+
+nav ul li a:hover::after {
+    width: 100%;
+}
+
+/* Active nav link */
+nav ul li a.active {
+    color: var(--link-color);
+}
+nav ul li a.active::after {
+    width: 100%;
+}
+
+/* Main Content Area */
+main {
+    padding-top: 0; /* Let hero sit behind the fixed header to avoid any gap */
+    opacity: 0; /* fade-in on load (exclude header) */
+    transform: translateY(6px);
+    transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out);
+}
+
+section {
+    padding: 4rem 5%;
+}
+
+section:not(:last-of-type) {
+    padding-bottom: 4rem;
+}
+section#home {
+     padding: 0 5%;
+     margin-bottom: 0;
+}
+
+/* Homepage Banner */
+#home {
+    min-height: calc(100vh - 0px);
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: radial-gradient(1200px 700px at 50% -10%, rgba(255,69,0,0.18), rgba(255,69,0,0.06) 45%, rgba(0,0,0,0) 70%),
+                linear-gradient(rgba(18, 18, 18, 0.9), rgba(18, 18, 18, 0.95));
+    padding-top: 0;
+    margin-bottom: 0;
+}
+
+/* New hero banner to match provided reference */
+.hero-banner {
+    position: relative;
+    min-height: 560px;
+    display: block;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 0; /* establish stacking context so overlays can sit behind content */
+}
+/* (removed empty ruleset that served no purpose) */
+
+.hero-banner::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(180deg, rgba(255,115,40,0) 0%, rgba(255,115,40,0.12) 34%, rgba(255,115,40,0.26) 56%, rgba(0,0,0,0.35) 84%, rgba(18,18,18,0.92) 100%),
+        radial-gradient(900px 420px at 28% 56%, rgba(255, 120, 40, 0.5), rgba(255, 120, 40, 0) 64%);
+    pointer-events: none;
+    z-index: 0; /* behind .hero-inner (z-index: 1) */
+}
+.hero-banner::before {
+    /* Gentle page fade at the bottom of the hero into site background */
+    content: '';
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 220px;
+    background: linear-gradient(180deg, rgba(18,18,18,0) 0%, rgba(18,18,18,0.55) 65%, rgba(18,18,18,1) 100%);
+    pointer-events: none;
+    z-index: 0; /* keep fade behind content as well */
+}
+
+.hero-inner {
+    width: 100%;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 5% 56px 5%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: clamp(48px, 8vw, 120px);
+    min-height: 560px;
+    position: relative; /* keep content above overlays */
+    z-index: 1;
+}
+
+.hero-left { text-align: left; max-width: min(52%, 800px); position: relative; z-index: 1; }
+
+.season-badge {
+    display: inline-block;
+    background: linear-gradient(90deg, rgba(255,165,0,0.95), rgba(255,118,27,0.95));
+    color: #ffffff;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin-bottom: 18px;
+    text-transform: uppercase;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+    transition: transform 560ms var(--ease-spring), box-shadow 640ms var(--ease-out), filter 560ms var(--ease-out);
+}
+/* Gate page-load entrance until body.loaded so it doesn't fire under the main fade */
+.season-badge { opacity: 0; transform: translateY(12px) scale(0.985); }
+body.loaded .season-badge { animation: hero-title-pop var(--dur-slow) var(--ease-spring) both; animation-delay: 640ms; }
+.season-badge::after {
+    content: '';
+    position: absolute;
+    margin-left: 6px;
+    transform: translateY(14px);
+    border-width: 8px 0 0 8px;
+    border-style: solid;
+    border-color: transparent transparent transparent rgba(0,0,0,0.18);
+}
+
+.season-badge:hover {
+    transform: translateY(-1px) rotate(-0.25deg);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.35);
+    filter: saturate(1.05);
+}
+
+.hero-title { line-height: 0.9; }
+.hero-title span {
+    display: block;
+    color: #ffffff;
+    text-transform: uppercase;
+    font-size: clamp(58px, 9.6vw, 94px);
+    text-shadow: 0 12px 34px rgba(0, 0, 0, 0.6);
+    width: max-content; /* limit hover area to text width only */
+}
+/* Pop-in animation for hero title (trigger only after page is marked loaded) */
+.hero-title span { opacity: 0; transform: translateY(16px) scale(0.98); }
+body.loaded .hero-title span { animation: hero-title-pop var(--dur-slow) var(--ease-spring) both; }
+body.loaded .hero-title span:nth-child(1){ animation-delay: 700ms; }
+body.loaded .hero-title span:nth-child(2){ animation-delay: 820ms; }
+@keyframes hero-title-pop { from { opacity: 0; transform: translateY(16px) scale(0.98); } to { opacity: 1; transform: none; } }
+
+/* Hover animation for hero title text */
+.hero-title span {
+    transition: transform 620ms var(--ease-spring),
+                text-shadow 620ms var(--ease-out),
+                letter-spacing 720ms var(--ease-out);
+    will-change: transform, text-shadow, letter-spacing;
+}
+.hero-title span:hover {
+    transform: translateY(-2px) scale(1.015);
+    letter-spacing: 1px;
+    text-shadow: 0 16px 36px rgba(0,0,0,0.55), 0 0 24px rgba(255,120,40,0.4);
+}
+
+.hero-right { flex: 0 0 auto; transform: translateY(-6px); position: relative; z-index: 5; margin-left: clamp(56px, 10vw, 140px); }
+
+.next-label {
+    position: absolute;
+    top: -8px;
+    left: 0;
+    display: inline-block;
+    background: linear-gradient(180deg, #ff8a2d 0%, #ff6f1b 100%);
+    color: #fff;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 0.86rem;
+    letter-spacing: 0.8px;
+    border-radius: 0;
+    padding: 8px 12px 8px 12px;
+    box-shadow: none;
+    text-shadow: 0 1px 0 rgba(0,0,0,0.25);
+}
+.next-label::after {
+    content: '';
+    position: absolute;
+    right: -6px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-width: 8px 0 8px 6px;
+    border-style: solid;
+    border-color: transparent transparent transparent #ff6f1b;
+}
+
+.event-card-hero {
+    width: min(440px, 84vw);
+    background: #dcdcdc;
+    color: #121212;
+    border-radius: 2px;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.3);
+    padding: 28px 22px 18px 22px; /* top more to account for label overlap */
+    border: 1px solid rgba(0,0,0,0.28);
+    border-bottom: 4px solid rgba(0,0,0,0.28);
+    position: relative;
+    text-align: left;
+    animation: event-card-in var(--dur-slow) var(--ease-spring) 140ms both;
+    overflow: hidden; /* contain shine sweep */
+    transition: transform 600ms var(--ease-spring), box-shadow 700ms var(--ease-out), border-color 700ms var(--ease-out);
+    will-change: transform, box-shadow;
+}
+@keyframes event-card-in { from { opacity: 0; transform: translateY(14px) scale(0.98); } to { opacity: 1; transform: none; } }
+.event-card-hero .event-date {
+    font-family: var(--font-headings);
+    font-weight: 900;
+    text-transform: uppercase;
+    font-size: 1.22rem;
+    letter-spacing: 0.8px;
+    color: #151515;
+}
+.event-card-hero .event-time { margin-top: 8px; color: #3a3a3a; font-size: 1rem; }
+
+/* Shine sweep and lift on hover */
+.event-card-hero::after {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0; left: 0; width: 46%;
+    background: linear-gradient(115deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.7) 45%, rgba(255,255,255,0.95) 50%, rgba(255,255,255,0.65) 55%, rgba(255,255,255,0) 100%);
+    transform: skewX(-20deg) translateX(-140%);
+    opacity: 0;
+    mix-blend-mode: screen;
+    filter: blur(1.2px);
+    pointer-events: none;
+    will-change: transform, opacity;
+}
+.event-card-hero:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 22px 40px rgba(0,0,0,0.38);
+    border-color: rgba(0,0,0,0.4);
+}
+.event-card-hero:hover::after { animation: card-shine 1600ms var(--ease-out) forwards; }
+@keyframes card-shine {
+    0%   { transform: skewX(-20deg) translateX(-140%); opacity: 0; }
+    20%  { opacity: 1; }
+    60%  { opacity: 0.95; }
+    100% { transform: skewX(-20deg) translateX(160%); opacity: 0; }
+}
+
+/* Slight emphasis on ribbon when card hovered */
+.event-card-hero:hover .next-label { filter: brightness(1.06); }
+
+
+/* Center inner content using container */
+header nav, section > *:not(.full-bleed) {
+    width: 100%;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Ensure About quote text aligns exactly with paragraph text */
+section#about > blockquote {
+    margin-left: auto;  /* align with container like the paragraph */
+    margin-right: auto;
+}
+
+/* About copy width and alignment (override container max-width) */
+#about p {
+    max-width: 66ch; /* force wrap similar to mock */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#home .banner h1 {
+    margin-bottom: 1.5rem;
+    transition: transform 0.3s ease;
+}
+
+#home .banner h1:hover {
+    transform: scale(1.03); /* Subtle scale on hover */
+}
+
+#home .banner p {
+    font-size: 1.25em; /* Slightly larger intro text */
+    margin-bottom: 2.5rem;
+    max-width: 650px;
+    margin-left: auto;
+    margin-right: auto;
+    color: var(--header-text-color); /* Lighter text for intro */
+    /* Prevent highlighting */
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE/Edge */
+    user-select: none; /* Standard syntax */
+}
+
+/* Glowing Text Effect (Original - Keep for other potential uses) */
+.glowing-text {
+    text-shadow: 0 0 6px var(--primary-accent),
+                 0 0 12px var(--primary-accent),
+                 0 0 18px var(--secondary-accent),
+                 0 0 24px var(--secondary-accent);
+    transition: text-shadow 0.3s ease;
+}
+
+.glowing-text:hover {
+     text-shadow: 0 0 8px var(--primary-accent),
+                 0 0 16px var(--primary-accent),
+                 0 0 24px var(--secondary-accent),
+                 0 0 32px var(--secondary-accent); /* Intensify glow */
+}
+
+/* New Title Effect for H1 Banner */
+#home .banner h1 .glowing-text { /* Target specifically */
+    background: linear-gradient(90deg, var(--primary-accent), var(--secondary-accent), var(--primary-accent)); /* Orange-Red-Orange Gradient */
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.6); /* Subtle dark shadow for depth */
+    background-size: 200% auto; /* For potential animation */
+    animation: gradient-shine 5s linear infinite; /* Add subtle animation */
+    transition: none; /* Override basic glow transition */
+    /* Prevent highlighting */
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE/Edge */
+    user-select: none; /* Standard syntax */
+}
+
+#home .banner h1 .glowing-text:hover {
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.6); /* Keep consistent shadow on hover */
+    /* Optional: Slightly intensify animation or gradient on hover if desired */
+}
+
+@keyframes gradient-shine {
+    0% { background-position: 0% center; }
+    50% { background-position: 100% center; filter: drop-shadow(0 0 6px rgba(255, 69, 0, 0.2)); }
+    100% { background-position: 0% center; }
+}
+
+/* Call-to-Action Button */
+.cta-button {
+    display: inline-block;
+    padding: 0.9rem 2rem; /* Slightly larger padding */
+    background-color: var(--primary-accent);
+    color: #ffffff; /* White text on button */
+    border: none;
+    border-radius: 8px;
+    font-weight: 700; /* Bolder text */
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px; /* More spacing */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Base shadow */
+}
+
+.cta-button { will-change: transform, box-shadow, background-color; }
+.cta-button:hover {
+    background-color: var(--primary-accent-hover);
+    transform: translateY(-3px) scale(1.02); /* Lift and scale */
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.45); /* Increased shadow on hover */
+}
+
+.cta-button.secondary {
+    background-color: transparent;
+    color: var(--link-color);
+    border: 2px solid var(--link-color);
+}
+.cta-button.secondary:hover {
+    color: #fff;
+    background-color: var(--link-color);
+}
+
+.cta-group {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Glowing Border Effect (for specific buttons) */
+.glowing-border {
+    border: 2px solid var(--primary-accent);
+    box-shadow: 0 0 10px var(--primary-accent),
+                inset 0 0 10px var(--primary-accent);
+    animation: glow 1.5s infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        box-shadow: 0 0 6px var(--primary-accent),
+                    inset 0 0 6px var(--primary-accent);
+    }
+    to {
+        box-shadow: 0 0 18px var(--secondary-accent),
+                    inset 0 0 18px var(--secondary-accent);
+    }
+}
+
+/* About Section */
+#about blockquote {
+    border-left: none; /* we will draw the bar with ::before so text alignment is exact */
+    padding-left: 0;
+    margin: 1.5rem 0;    /* align with section padding like paragraphs */
+    max-width: 66ch;     /* match paragraph width */
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    font-style: italic;
+    color: var(--header-text-color); /* Lighter quote text */
+    font-size: 1.1em;
+    /* Prevent highlighting */
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE/Edge */
+    user-select: none; /* Standard syntax */
+}
+#about blockquote::before {
+    content: '';
+    position: absolute;
+    left: calc(-1.25rem - 4px); /* slight outdent to align with heading accent */
+    top: 6px;                   /* short bar near first line only */
+    height: 28px;
+    width: 4px;
+    background: var(--primary-accent);
+    border-radius: 2px;
+}
+
+/* How It Works - Timeline */
+#how-it-works .timeline {
+    list-style: none;
+    padding-left: 2rem; /* Increased padding */
+    position: relative;
+    max-width: 600px; /* Limit width */
+    margin: 2rem auto; /* Center timeline */
+}
+
+#how-it-works .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 5px;
+    bottom: 5px;
+    width: 3px; /* Thicker line */
+    background-color: var(--primary-accent);
+    border-radius: 3px;
+}
+
+#how-it-works .timeline li {
+    margin-bottom: 2rem; /* Increased spacing */
+    padding-left: 1.5rem; /* Adjusted padding */
+    position: relative;
+    font-size: 1.1em;
+}
+
+#how-it-works .timeline li::before {
+    content: '';
+    position: absolute;
+    left: -2rem; /* Align with the main line */
+    top: 5px; /* Adjust vertical alignment */
+    width: 15px; /* Larger dot */
+    height: 15px;
+    background-color: var(--secondary-accent);
+    border-radius: 50%;
+    border: 3px solid var(--background-color);
+    box-shadow: 0 0 5px var(--secondary-accent);
+}
+
+/* Card Base Styles */
+.card {
+    background-color: var(--card-background);
+    border-radius: 10px; /* Smoother radius */
+    border: 1px solid var(--border-color);
+    padding: 2rem; /* Consistent padding */
+    margin-bottom: 1.5rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    border-left: 4px solid transparent; /* Placeholder for hover effect */
+}
+
+.card { will-change: transform, box-shadow; }
+.card:hover {
+    transform: none; /* Keep layout stable to avoid hover flicker */
+    box-shadow: 0 14px 36px rgba(0, 0, 0, 0.35); /* Enhanced shadow */
+    border-color: var(--primary-accent); /* Orange border */
+    border-left: 4px solid var(--secondary-accent); /* Accent on left */
+}
+
+/* FAQ Section */
+#faq .faq-item {
+    /* Inherit from .card or apply similar styles if not using .card class */
+    background-color: var(--card-background);
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    transition: transform var(--dur-med) var(--ease-spring), box-shadow var(--dur-med) var(--ease-out), border-color var(--dur-med) var(--ease-out);
+}
+#faq .faq-item:hover {
+     transform: none; /* Prevent hover oscillation between items */
+     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.3);
+     border-color: var(--primary-accent);
+}
+
+
+#faq .faq-question {
+    background: none;
+    border: none;
+    color: var(--header-text-color); /* Lighter question text */
+    padding: 1.2rem 1.5rem;
+    width: 100%;
+    text-align: left;
+    font-size: 1.15em; /* Slightly larger */
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s ease;
+}
+
+#faq .faq-question:hover {
+    background-color: rgba(255, 69, 0, 0.08); /* Subtle orange hover */
+    color: var(--text-color); /* Brighten text slightly */
+}
+
+#faq .faq-question::after {
+    content: '+';
+    font-size: 1.8em; /* Larger indicator */
+    transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Bouncy transition */
+    color: var(--primary-accent);
+}
+
+#faq .faq-item.active .faq-question::after {
+    transform: rotate(135deg); /* Spin indicator */
+}
+
+#faq .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out, padding 0.5s ease-out; /* Smoother transition */
+    padding: 0 1.5rem;
+    color: #b0b0b0; /* Slightly dimmer answer text */
+}
+#faq .faq-item.active .faq-answer {
+     padding: 0 1.5rem 1.5rem 1.5rem;
+}
+
+#faq .faq-answer p {
+    margin: 0;
+    padding-bottom: 0; /* Remove default p margin inside answer */
+    line-height: 1.6;
+}
+
+/* Team Section */
+#team .team-group {
+     /* Use .card styles */
+    background-color: var(--card-background);
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    padding: 2rem;
+    margin-bottom: 2rem; /* Increase spacing between groups */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    border-left: 4px solid transparent;
+}
+
+#team .role-definitions {
+    background-color: rgba(255, 69, 0, 0.06); /* subtle tinted bg to differentiate */
+    border: 1px dashed var(--border-color); /* single dashed outline (outer) */
+    box-shadow: none;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+    /* Ensure internal hover of summary/content doesn't collapse available hover area */
+    padding: 0.25rem;
+}
+
+/* Remove container hover background to eliminate flicker in gap areas */
+
+#team .role-definitions details {
+    padding: 0.25rem 0.5rem;
+    border: none; /* remove inner solid outline */
+}
+
+#team .role-definitions summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0.75rem 0.75rem;
+    border-radius: 6px;
+    border: none;
+    /* Ensure summary always overlaps the content's top edge to avoid hover gaps */
+    position: sticky; /* keep hover target continuous at seam */
+    top: 0;
+    z-index: 2;
+}
+
+/* Remove default triangle and add custom caret */
+#team .role-definitions summary::-webkit-details-marker { display: none; }
+#team .role-definitions summary::before {
+    content: '\25BA'; /* Right-pointing triangle */
+    color: var(--secondary-accent);
+    margin-right: 0.5rem;
+    transition: transform 0.2s ease;
+}
+
+#team .role-definitions summary:hover {
+    background-color: rgba(255, 69, 0, 0.10);
+}
+
+/* Keep pointer active while moving into content area to avoid flicker */
+#team .role-definitions details,
+#team .role-definitions details * {
+    cursor: default;
+}
+#team .role-definitions summary,
+#team .role-definitions summary * {
+    cursor: pointer;
+}
+
+#team .role-definitions summary:focus-visible {
+    outline: 2px solid var(--link-color);
+    outline-offset: 2px;
+}
+
+#team .role-definitions details[open] summary::before {
+    transform: rotate(90deg);
+}
+
+#team .role-definitions h3 {
+    margin: 0;
+    color: var(--text-color);
+    border-bottom: none; /* remove underline */
+    padding-bottom: 0;
+}
+
+#team .role-definitions ul {
+    margin-top: 0; /* avoid gap that can cause hover flicker between summary and content */
+}
+
+/* Keep cursor consistent across expanded content to avoid flicker */
+
+/* Animated expand/collapse for Role Definitions via JS-controlled height */
+#team .role-definitions .rd-content {
+    display: block;
+    overflow: visible;
+    margin-top: 0;
+}
+
+#team .role-definitions details[open] .rd-content {
+    margin-top: 0;
+}
+
+#team .role-definitions .rd-content > ul,
+#team .role-definitions > details > ul {
+    min-height: 0;
+    padding-top: 0.5rem;
+    opacity: 1;
+    transform: none;
+    transition: none;
+    overflow: visible;
+}
+
+#team .role-definitions details[open] .rd-content > ul,
+#team .role-definitions > details[open] > ul {
+    opacity: 1;
+    transform: none;
+}
+
+/* Staggered list item entrance when opening */
+#team .role-definitions details > ul > li,
+#team .role-definitions .rd-content > ul > li {
+    opacity: 1;
+    transform: none;
+    transition: none;
+}
+
+#team .role-definitions details[open] > ul > li,
+#team .role-definitions details[open] .rd-content > ul > li {
+    opacity: 1;
+    transform: none;
+    transition: none;
+}
+
+/* Delay steps for first 14 items */
+#team .role-definitions details[open] > ul > li:nth-child(1),
+#team .role-definitions details[open] .rd-content > ul > li:nth-child(1)  { transition-delay: 0ms; }
+#team .role-definitions details[open] > ul > li:nth-child(2),
+#team .role-definitions details[open] .rd-content > ul > li:nth-child(2)  { transition-delay: 40ms; }
+#team .role-definitions details[open] > ul > li:nth-child(3),
+#team .role-definitions details[open] .rd-content > ul > li:nth-child(3)  { transition-delay: 80ms; }
+#team .role-definitions details[open] > ul > li:nth-child(4),
+#team .role-definitions details[open] .rd-content > ul > li:nth-child(4)  { transition-delay: 120ms; }
+#team .role-definitions details[open] > ul > li:nth-child(5),
+#team .role-definitions details[open] .rd-content > ul > li:nth-child(5)  { transition-delay: 160ms; }
+#team .role-definitions details[open] > ul > li:nth-child(6),
+#team .role-definitions details[open] .rd-content > ul > li:nth-child(6)  { transition-delay: 200ms; }
+#team .role-definitions details[open] > ul > li:nth-child(7),
+#team .role-definitions details[open] .rd-content > ul > li:nth-child(7)  { transition-delay: 240ms; }
+#team .role-definitions details[open] > ul > li:nth-child(8),
+#team .role-definitions details[open] .rd-content > ul > li:nth-child(8)  { transition-delay: 280ms; }
+#team .role-definitions details[open] > ul > li:nth-child(9),
+#team .role-definitions details[open] .rd-content > ul > li:nth-child(9)  { transition-delay: 320ms; }
+#team .role-definitions details[open] > ul > li:nth-child(10),
+#team .role-definitions details[open] .rd-content > ul > li:nth-child(10) { transition-delay: 360ms; }
+#team .role-definitions details[open] > ul > li:nth-child(11),
+#team .role-definitions details[open] .rd-content > ul > li:nth-child(11) { transition-delay: 400ms; }
+#team .role-definitions details[open] > ul > li:nth-child(12),
+#team .role-definitions details[open] .rd-content > ul > li:nth-child(12) { transition-delay: 440ms; }
+#team .role-definitions details[open] > ul > li:nth-child(13),
+#team .role-definitions details[open] .rd-content > ul > li:nth-child(13) { transition-delay: 480ms; }
+#team .role-definitions details[open] > ul > li:nth-child(14),
+#team .role-definitions details[open] .rd-content > ul > li:nth-child(14) { transition-delay: 520ms; }
+
+/* Role badges */
+.role-badge {
+    display: inline-block;
+    padding: 0.05rem 0.5rem;
+    font-size: 0.85em;
+    font-weight: 800;
+    border-radius: 6px;
+    line-height: 1.4;
+    border: 1px solid currentColor;
+    color: var(--badge-color, #ddd);
+    background-color: var(--badge-bg, rgba(255,255,255,0.08));
+    margin-right: 0.35rem;
+}
+
+.role-badge.owner { --badge-color: #c084fc; --badge-bg: rgba(192, 132, 252, 0.16); }
+.role-badge.co-owner { --badge-color: #60a5fa; --badge-bg: rgba(96, 165, 250, 0.16); }
+.role-badge.manager { --badge-color: #fb923c; --badge-bg: rgba(251, 146, 60, 0.16); }
+.role-badge.admin { --badge-color: #ef4444; --badge-bg: rgba(239, 68, 68, 0.16); }
+.role-badge.discord-manager { --badge-color: #8b5cf6; --badge-bg: rgba(139, 92, 246, 0.16); }
+.role-badge.discord-staff { --badge-color: #60a5fa; --badge-bg: rgba(96, 165, 250, 0.16); }
+.role-badge.staff { --badge-color: #f59e0b; --badge-bg: rgba(245, 158, 11, 0.16); }
+.role-badge.builder-manager { --badge-color: #a3e635; --badge-bg: rgba(163, 230, 53, 0.16); }
+.role-badge.builder { --badge-color: #22c55e; --badge-bg: rgba(34, 197, 94, 0.16); }
+.role-badge.developer-manager { --badge-color: #ef4444; --badge-bg: rgba(239, 68, 68, 0.16); }
+.role-badge.head-developer { --badge-color: #f472b6; --badge-bg: rgba(244, 114, 182, 0.16); }
+.role-badge.developer { --badge-color: #f472b6; --badge-bg: rgba(244, 114, 182, 0.16); }
+.role-badge.moderator { --badge-color: #34d399; --badge-bg: rgba(52, 211, 153, 0.16); }
+.role-badge.helper { --badge-color: #9ca3af; --badge-bg: rgba(156, 163, 175, 0.16); }
+.role-badge.host { --badge-color: #f97316; --badge-bg: rgba(249, 115, 22, 0.16); }
+.role-badge.trial { --badge-color: #94a3b8; --badge-bg: rgba(148, 163, 184, 0.16); }
+
+#team .team-group:hover {
+    transform: none; /* Prevent hover oscillation between items */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    border-color: var(--primary-accent); 
+    border-left: 4px solid var(--secondary-accent); 
+}
+
+
+#team .team-group h3 {
+    color: var(--secondary-accent);
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 0.8rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Ensure no underline inside Role Definitions summary heading */
+#team .role-definitions h3 {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+/* Ensure the hero background image never tiles and scales on large screens */
+#home.hero-banner {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+}
+
+#team ul {
+    padding-left: 0;
+}
+
+#team ul li {
+    margin-bottom: 0.8rem; /* Increased spacing */
+    font-size: 1.05em;
+}
+
+/* Leadership card specific tweaks: clearer role markers and tighter spacing */
+#team .team-group.leadership ul li { margin-bottom: 0.35rem; }
+#team .team-group.leadership ul li p { margin-bottom: 0.45rem; }
+#team .team-group.leadership ul li p:last-of-type { margin-bottom: 0.2rem; }
+
+.role-dash {
+    display: inline-block;
+    margin-right: 0.4rem;
+    color: var(--header-text-color);
+    font-weight: 800;
+}
+
+/* Per-person highlights inside Leadership */
+#team .team-group.leadership .leader-highlight {
+    position: relative;
+    border-radius: 8px;
+    padding: 0.35rem 0.5rem 0.55rem 0.75rem;
+}
+#team .team-group.leadership .leader-highlight::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.35rem;
+    bottom: 0.35rem;
+    width: 4px;
+    border-radius: 3px;
+}
+
+/* DeuceyBoy – purple highlight */
+#team .team-group.leadership .person-deuceyboy {
+    background: linear-gradient(90deg, rgba(192,132,252,0.18), rgba(168,85,247,0.10) 60%, rgba(192,132,252,0.02) 100%);
+}
+#team .team-group.leadership .person-deuceyboy::before { background: linear-gradient(180deg, #c084fc, #a855f7); }
+#team .team-group.leadership .person-deuceyboy .role-dash { color: #c084fc; }
+#team .team-group.leadership .person-deuceyboy strong {
+    background: linear-gradient(90deg, #c084fc, #a855f7);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+
+/* Freshlo – rainbow highlight */
+#team .team-group.leadership .person-freshlo {
+    background: linear-gradient(90deg,
+        rgba(255,0,128,0.16), rgba(255,140,0,0.14), rgba(255,215,0,0.14),
+        rgba(0,208,132,0.12), rgba(0,162,255,0.12), rgba(138,43,226,0.12) 90%,
+        rgba(138,43,226,0.04) 100%);
+}
+#team .team-group.leadership .person-freshlo::before {
+    background: linear-gradient(180deg, #ff0080 0%, #ff8c00 25%, #ffd700 45%, #00d084 65%, #00a2ff 85%, #8a2be2 100%);
+}
+#team .team-group.leadership .person-freshlo .role-dash,
+#team .team-group.leadership .person-freshlo strong {
+    background: linear-gradient(90deg, #ff0080, #ff8c00, #ffd700, #00d084, #00a2ff, #8a2be2);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+
+/* SparkPixels – blue to light-blue highlight */
+#team .team-group.leadership .person-sparkpixels {
+    background: linear-gradient(90deg, rgba(59,130,246,0.18), rgba(147,197,253,0.12) 60%, rgba(147,197,253,0.04) 100%);
+}
+#team .team-group.leadership .person-sparkpixels::before { background: linear-gradient(180deg, #3b82f6, #93c5fd); }
+#team .team-group.leadership .person-sparkpixels .role-dash { color: #60a5fa; }
+#team .team-group.leadership .person-sparkpixels strong {
+    background: linear-gradient(90deg, #3b82f6, #93c5fd);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+
+/* Events Section */
+#events .event-countdown {
+     /* Use .card styles */
+    text-align: center;
+    background-color: var(--card-background);
+    padding: 2.5rem; /* More padding */
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    border-top: 4px solid transparent; /* Add top border for hover */
+}
+
+#events .event-countdown:hover {
+     transform: none; /* Keep hover area stable */
+     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+     border-color: var(--secondary-accent); /* Lighter orange border */
+     border-top: 4px solid var(--primary-accent); /* Orange top border */
+}
+
+
+#events #countdown-timer {
+    font-size: 2.5em; /* Larger countdown */
+    font-weight: 700;
+    color: var(--primary-accent);
+    margin: 1.5rem 0;
+    text-shadow: 0 0 8px var(--primary-accent);
+}
+
+/* Countdown digits enhanced readability */
+#events #countdown-timer {
+    letter-spacing: 1px;
+}
+
+#events .event-details {
+    text-align: left;
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-color);
+    color: var(--header-text-color); /* Lighter text for details */
+}
+
+#events .event-details h4 {
+    color: var(--secondary-accent);
+    margin-bottom: 1.2rem;
+    font-size: 1.3em;
+}
+
+#events .event-details ul {
+    list-style: disc;
+    padding-left: 30px;
+    margin: 0.5rem 0 1.5rem 0;
+}
+
+#events .event-details li {
+    margin-bottom: 0.5rem;
+}
+
+#events .discord-link {
+    display: inline-block;
+    margin-top: 2rem;
+    padding: 0.8rem 1.5rem;
+    background-color: #5865F2;
+    color: #fff;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#events .discord-link:hover {
+    background-color: #4a54c9;
+    color: #fff;
+    transform: scale(1.05); /* Scale discord link */
+}
+
+/* Community Section */
+#community .community-links {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+#community .community-links .cta-button {
+    margin: 0.8rem;
+    min-width: 190px;
+}
+
+/* Specific button colors - keep as is or adjust if needed */
+#community .cta-button.discord { background-color: #5865F2; color: #fff; }
+#community .cta-button.discord:hover { background-color: #4a54c9; }
+#community .cta-button.twitch { background-color: #9146FF; color: #fff; }
+#community .cta-button.twitch:hover { background-color: #7a3ad9; }
+#community .cta-button.youtube { background-color: #FF0000; color: #fff; }
+#community .cta-button.youtube:hover { background-color: #cc0000; }
+
+
+#community .housing-info,
+#community .boost-perks {
+     /* Use .card styles */
+    background-color: var(--card-background);
+    padding: 2rem;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    margin-top: 2rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+     border-left: 4px solid transparent;
+}
+
+#community .housing-info:hover,
+#community .boost-perks:hover {
+    transform: none; /* Keep hover area stable */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    border-color: var(--primary-accent);
+    border-left: 4px solid var(--secondary-accent);
+}
+
+
+#community h3 {
+     color: var(--secondary-accent);
+     margin-bottom: 1rem;
+}
+
+/* Respect reduced motion preferences (keep gentle transitions, remove flashy effects) */
+@media (prefers-reduced-motion: reduce) {
+    /* Allow subtle easing instead of abrupt jumps */
+    .hero-title span,
+    .season-badge {
+        animation: none !important;
+        transition: all 240ms var(--ease-out) !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+    /* Keep the shine sweep, just tone down duration via animation-duration override */
+    .event-card-hero:hover::after { animation-duration: 1200ms !important; }
+}
+
+/* Footer */
+footer {
+    background-color: #0a0a0a; /* Slightly darker than main bg */
+    color: #888; /* Dimmer footer text */
+    text-align: center;
+    padding: 2.5rem 5%;
+    margin-top: 4rem;
+    border-top: 1px solid #222;
+    font-size: 0.95em;
+}
+
+footer p {
+    margin-bottom: 0.8rem;
+    max-width: none; /* Allow footer text to span wider */
+}
+
+footer a {
+    color: #aaa; /* Lighter footer links */
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: var(--link-color); /* Use main link color on hover */
+}
+
+/* Back to Top Button */
+#back-to-top {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid var(--border-color);
+    background-color: rgba(18, 18, 18, 0.8);
+    color: var(--header-text-color);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+    opacity: 0;
+    transform: translateY(8px);
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+#back-to-top.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+/* Placeholders */
+.infographic-placeholder,
+.calendar-placeholder {
+    text-align: center;
+    padding: 4rem;
+    margin-top: 2.5rem;
+    background-color: rgba(42, 42, 42, 0.5); /* Semi-transparent dark background */
+    border: 2px dashed var(--border-color);
+    border-radius: 10px;
+    color: #888;
+}
+
+/* Responsive Design (Basic Example) */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.5em;
+    }
+    h2 {
+        font-size: 2em;
+    }
+     h3 {
+        font-size: 1.4em;
+    }
+    p {
+        max-width: none; /* Remove width limit on small screens */
+    }
+
+    .menu-toggle { display: inline-block; }
+    nav .logo { height: 46px; }
+    nav ul {
+        display: none !important; /* start hidden on mobile */
+        flex-direction: column;
+        position: absolute;
+        top: 100%; /* place dropdown directly below the header/nav */
+        left: 0;
+        width: 100%;
+        background-color: rgba(18, 18, 18, 0.98);
+        padding: 1rem 0;
+        border-top: 1px solid var(--border-color);
+        box-shadow: 0 12px 20px rgba(0,0,0,0.35);
+        z-index: 10; /* ensure it renders above header contents */
+    }
+    nav ul.active {
+        display: flex !important;
+    }
+    /* strengthen specificity for the real menu element */
+    #primary-navigation.active { display: flex !important; }
+    nav ul li {
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+    nav ul li a { padding: 0.8rem 0; display: inline-block; }
+    /* Add a menu toggle button icon styling here if implemented */
+    /* .menu-toggle { display: block; ... } */
+
+    .card,
+    #faq .faq-item, 
+    #team .team-group, 
+    #events .event-countdown, 
+    #community .housing-info, 
+    #community .boost-perks {
+         padding: 1.5rem; /* Reduce padding on smaller screens */
+    }
+    #home .banner p {
+        font-size: 1.1em;
+    }
+    .cta-button { padding: 0.8rem 1.5rem; font-size: 1em; min-height: 44px; }
+    #community .community-links .cta-button {
+        min-width: 150px;
+        margin: 0.5rem;
+    }
+    /* tighten section and header spacing */
+    section { padding: 3rem 6%; }
+    header { padding: 0.75rem 5%; }
+    /* scale hero title for small screens */
+    .hero-title span { font-size: clamp(36px, 11vw, 58px); }
+    /* smaller anchor offset on phones */
+    main section[id] { scroll-margin-top: 84px; }
+    /* Hero adjustments */
+    .hero-inner {
+        padding: 24px 5% 48px 5%;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .hero-left { max-width: 100%; }
+    .hero-right { margin-left: 0; }
+    .event-card-hero { width: 100%; }
+}
+
+/* Offset anchor targets for fixed header so section titles aren’t hidden */
+main section[id] {
+    scroll-margin-top: 96px; /* approximate header height */
+}
+
+/* Reveal on scroll */
+.reveal { opacity: 0; transform: translateY(18px) scale(0.98); transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out); transition-delay: var(--delay, 0ms); }
+.reveal.reveal-in { opacity: 1; transform: none; }
+
+/* Optional: Smooth Transitions (Example) */
+/* 
+body {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+body.loaded {
+    opacity: 1;
+}
+*/
+
+/* Apply non-highlighting to all headers and specific paragraphs */
+h1, h2, h3, h4,
+#home .banner p,
+#about blockquote {
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE/Edge */
+    user-select: none; /* Standard syntax */
+} 
+
+/* Make most UI/chrome non-selectable; leave informational body copy selectable */
+header, nav, nav a, .menu-toggle, .cta-button,
+.season-badge, .next-label, .hero-title span, nav .logo {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Heading decorative accent */
+h2 { position: relative; }
+h2::after {
+    content: '';
+    display: block;
+    width: 64px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-accent), var(--secondary-accent));
+    border-radius: 2px;
+    margin-top: 0.6rem;
+    transition: width var(--dur-med) var(--ease-spring);
+}
+
+/* Grow the underline on hover/focus for polish */
+h2:hover::after,
+h2:focus-visible::after {
+    width: 120px;
+}
+
+/* Center select section headings and their accent line */
+#about h2,
+#how-it-works h2,
+#faq h2 { text-align: center; }
+#about h2::after,
+#how-it-works h2::after,
+#faq h2::after { margin-left: auto; margin-right: auto; }
+
+/* Event list marker color and chips for labels */
+#events .event-details ul li::marker { color: var(--secondary-accent); }
+#events .event-details p strong {
+    display: inline-block;
+    font-weight: 700;
+    color: var(--text-color);
+    background-color: rgba(255, 69, 0, 0.08);
+    border: 1px solid var(--border-color);
+    padding: 0.1rem 0.5rem;
+    border-radius: 999px;
+    margin-right: 0.4rem;
+}
+
+/* FAQ active question background tweak */
+#faq .faq-item.active .faq-question { background-color: rgba(255, 69, 0, 0.12); }
+
+/* Focus styles for accessibility */
+a:focus-visible,
+button:focus-visible,
+.cta-button:focus-visible {
+    outline: 2px solid var(--link-color);
+    outline-offset: 2px;
+}
+
+/* Fallback :root definition to ensure CSS variables are defined */
+:root {
+    --background-color: #121212;
+    --text-color: #e0e0e0;
+    --header-text-color: #C0C0C0;
+    --primary-accent: #FF4500;
+    --primary-accent-hover: #FF1E56;
+    --secondary-accent: #ff6347;
+    --link-color: #00E5FF;
+    --card-background: #2A2A2A;
+    --border-color: #444;
+    --font-primary: 'Nunito', sans-serif;
+    --font-headings: 'Exo 2', sans-serif;
+} 
+
