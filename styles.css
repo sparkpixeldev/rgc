@@ -646,7 +646,8 @@ section#about > blockquote {
 #how-it-works .timeline::before {
     content: '';
     position: absolute;
-    left: 0;
+    /* Offset the line so it passes through the center of the dots */
+    left: 9px;
     top: 5px;
     bottom: 5px;
     width: 3px; /* Thicker line */
