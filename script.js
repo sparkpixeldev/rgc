@@ -75,7 +75,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const nextEventDateSpan = document.getElementById('next-event-date'); // required
     const heroEventDate     = document.getElementById('hero-next-event-date');
     const heroEventTime     = document.getElementById('hero-next-event-time');
-    // Event time: Saturday, Nov 22, 2025 at 12:00 PM in New York (America/New_York)
+    const eventsSectionEl   = document.getElementById('events');
+    const noEventMode       = eventsSectionEl && eventsSectionEl.getAttribute('data-no-event') === 'true';
+    // Event time: Sunday, Oct 12, 2025 at 12:00 PM in New York (America/New_York)
     // We compute the equivalent UTC Date to ensure correct local conversion across DST/regions.
     const getZonedDate = (tz) => {
         try {
@@ -86,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
             });
             // Target wall time in New York
-            const target = new Date('2025-11-22T12:00:00'); // interpret later via parts
+            const target = new Date('2025-10-12T12:00:00'); // interpret later via parts
             const parts = fmt.formatToParts(target);
             const map = Object.fromEntries(parts.map(p => [p.type, p.value]));
             // Build an ISO-like string in the target zone's wall time, then treat as if it's local to get UTC epoch
@@ -103,10 +105,14 @@ document.addEventListener('DOMContentLoaded', () => {
             return new Date(utcIso);
         } catch (e) {
             // Fallback: attempt parsing with explicit time zone name (not widely supported in Date constructor)
-            return new Date('2025-11-22T12:00:00-05:00'); // New York EST on Nov 22, 2025
+            return new Date('2025-10-12T12:00:00-04:00'); // New York likely EDT on Oct 12, 2025
         }
     };
 
+    if (noEventMode) {
+        if (heroEventDate) heroEventDate.textContent = 'Not currently scheduled';
+        if (heroEventTime) heroEventTime.textContent = '';
+    } else {
     const eventDateEST = getZonedDate('America/New_York');
 
     try {
@@ -164,6 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         updateCountdown();                    // run immediately
         const intervalId = setInterval(updateCountdown, 1000);
+    }
     }
 
     /* ─────────────────────────────────────
