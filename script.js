@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Mark body as loaded for CSS entrance animations (ensure first paint occurs)
     requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-    document.body.classList.add('loaded');
+            document.body.classList.add('loaded');
             // Ensure hero elements animate on page load (excluding header)
             try {
                 const prefersReduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     faqItems.forEach(item => {
         const questionButton = item.querySelector('.faq-question');
-        const answerDiv      = item.querySelector('.faq-answer');
+        const answerDiv = item.querySelector('.faq-answer');
 
         questionButton.addEventListener('click', () => {
             const isActive = item.classList.contains('active');
@@ -51,10 +51,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (isActive) {
                 item.classList.remove('active');
                 answerDiv.style.maxHeight = null;
-                answerDiv.style.padding   = '0 1.5rem';
+                answerDiv.style.padding = '0 1.5rem';
             } else {
                 item.classList.add('active');
-                answerDiv.style.padding   = '0 1.5rem 1rem 1.5rem';
+                answerDiv.style.padding = '0 1.5rem 1rem 1.5rem';
                 answerDiv.style.maxHeight = `${answerDiv.scrollHeight}px`;
             }
         });
@@ -71,13 +71,11 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ─────────────────────────────────────
        Event Date → local timezone
     ───────────────────────────────────── */
-    const eventTimeSpan     = document.getElementById('event-time');      // optional
+    const eventTimeSpan = document.getElementById('event-time');      // optional
     const nextEventDateSpan = document.getElementById('next-event-date'); // required
-    const heroEventDate     = document.getElementById('hero-next-event-date');
-    const heroEventTime     = document.getElementById('hero-next-event-time');
-    const eventsSectionEl   = document.getElementById('events');
-    const noEventMode       = eventsSectionEl && eventsSectionEl.getAttribute('data-no-event') === 'true';
-    // Event time: Sunday, Oct 12, 2025 at 12:00 PM in New York (America/New_York)
+    const heroEventDate = document.getElementById('hero-next-event-date');
+    const heroEventTime = document.getElementById('hero-next-event-time');
+    // Event time: Sunday, Feb 15, 2026 at 12:00 PM in New York (America/New_York)
     // We compute the equivalent UTC Date to ensure correct local conversion across DST/regions.
     const getZonedDate = (tz) => {
         try {
@@ -88,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
             });
             // Target wall time in New York
-            const target = new Date('2025-10-12T12:00:00'); // interpret later via parts
+            const target = new Date('2026-02-15T12:00:00'); // interpret later via parts
             const parts = fmt.formatToParts(target);
             const map = Object.fromEntries(parts.map(p => [p.type, p.value]));
             // Build an ISO-like string in the target zone's wall time, then treat as if it's local to get UTC epoch
@@ -105,14 +103,10 @@ document.addEventListener('DOMContentLoaded', () => {
             return new Date(utcIso);
         } catch (e) {
             // Fallback: attempt parsing with explicit time zone name (not widely supported in Date constructor)
-            return new Date('2025-10-12T12:00:00-04:00'); // New York likely EDT on Oct 12, 2025
+            return new Date('2026-02-15T12:00:00-05:00'); // New York EST on Feb 15, 2026
         }
     };
 
-    if (noEventMode) {
-        if (heroEventDate) heroEventDate.textContent = 'Not currently scheduled';
-        if (heroEventTime) heroEventTime.textContent = '';
-    } else {
     const eventDateEST = getZonedDate('America/New_York');
 
     try {
@@ -124,10 +118,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const fullUserDateTime = `${userLocalDate} @ ${userLocalTime}`;
 
-        if (eventTimeSpan)       eventTimeSpan.textContent     = userLocalTime;
-        if (nextEventDateSpan)   nextEventDateSpan.textContent = fullUserDateTime;
-        if (heroEventDate)       heroEventDate.textContent     = userLocalDate;
-        if (heroEventTime)       heroEventTime.textContent     = userLocalTime;
+        if (eventTimeSpan) eventTimeSpan.textContent = userLocalTime;
+        if (nextEventDateSpan) nextEventDateSpan.textContent = fullUserDateTime;
+        if (heroEventDate) heroEventDate.textContent = userLocalDate;
+        if (heroEventTime) heroEventTime.textContent = userLocalTime;
 
         // Also update the banner title
         const bannerGlowingText = document.querySelector('#home .banner h1 .glowing-text');
@@ -146,12 +140,12 @@ document.addEventListener('DOMContentLoaded', () => {
        Countdown Timer
     ───────────────────────────────────── */
     const countdownTimerDiv = document.getElementById('countdown-timer');
-    const targetTimestamp   = eventDateEST.getTime();
+    const targetTimestamp = eventDateEST.getTime();
 
     if (countdownTimerDiv && !Number.isNaN(targetTimestamp)) {
         const updateCountdown = () => {
-            const now       = Date.now();
-            const distance  = targetTimestamp - now;
+            const now = Date.now();
+            const distance = targetTimestamp - now;
 
             if (distance <= 0) {
                 countdownTimerDiv.textContent = 'EVENT IS LIVE OR HAS PASSED!';
@@ -159,10 +153,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            const days    = Math.floor(distance / 86_400_000);      // 1000*60*60*24
-            const hours   = Math.floor((distance % 86_400_000) / 3_600_000);
-            const minutes = Math.floor((distance % 3_600_000) /   60_000);
-            const seconds = Math.floor((distance %     60_000) /    1_000);
+            const days = Math.floor(distance / 86_400_000);      // 1000*60*60*24
+            const hours = Math.floor((distance % 86_400_000) / 3_600_000);
+            const minutes = Math.floor((distance % 3_600_000) / 60_000);
+            const seconds = Math.floor((distance % 60_000) / 1_000);
 
             countdownTimerDiv.textContent =
                 `${days}d ${hours}h ${minutes}m ${seconds}s`;
@@ -170,7 +164,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         updateCountdown();                    // run immediately
         const intervalId = setInterval(updateCountdown, 1000);
-    }
     }
 
     /* ─────────────────────────────────────
@@ -277,10 +270,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         // Trigger reveal-in after delay is set, then stop observing those
         requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-            initialInView.forEach(el => {
-                el.classList.add('reveal-in');
-                revealObserver.unobserve(el);
+            requestAnimationFrame(() => {
+                initialInView.forEach(el => {
+                    el.classList.add('reveal-in');
+                    revealObserver.unobserve(el);
                 });
             });
         });
@@ -300,6 +293,54 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* ─────────────────────────────────────
+       Rulebook Popup Toggle
+    ───────────────────────────────────── */
+    const rulebookPopup = document.getElementById('rulebook-popup');
+    const rulebookToggle = document.getElementById('rulebook-toggle');
+    const rulebookClose = rulebookPopup ? rulebookPopup.querySelector('.rulebook-close') : null;
+
+    if (rulebookPopup && rulebookToggle) {
+        rulebookToggle.addEventListener('click', () => {
+            rulebookPopup.classList.add('open');
+        });
+        if (rulebookClose) {
+            rulebookClose.addEventListener('click', () => {
+                rulebookPopup.classList.remove('open');
+            });
+        }
+        // Close when clicking outside the card
+        document.addEventListener('click', (e) => {
+            if (rulebookPopup.classList.contains('open') &&
+                !rulebookPopup.contains(e.target)) {
+                rulebookPopup.classList.remove('open');
+            }
+        });
+    }
+
+    /* ─────────────────────────────────────
        Role Definitions: no JS needed; native <details> handles toggle.
     ───────────────────────────────────── */
+
+    /* ─────────────────────────────────────
+       Enchantment Particles (Hero Section)
+    ───────────────────────────────────── */
+    const heroEl = document.querySelector('.hero-banner');
+    const prefersReduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (heroEl && !prefersReduceMotion) {
+        const particleColors = ['#5cb85c', '#FFAA00', '#8b5cf6', '#6ee7b7', '#7dd87d', '#ffcc44'];
+        const spawnParticle = () => {
+            const p = document.createElement('div');
+            p.className = 'mc-particle';
+            const size = Math.floor(Math.random() * 4) + 3; // 3-6px
+            p.style.width = size + 'px';
+            p.style.height = size + 'px';
+            p.style.backgroundColor = particleColors[Math.floor(Math.random() * particleColors.length)];
+            p.style.left = Math.random() * 100 + '%';
+            p.style.bottom = Math.random() * 40 + '%';
+            p.style.animationDuration = (3 + Math.random() * 3) + 's';
+            heroEl.appendChild(p);
+            p.addEventListener('animationend', () => p.remove());
+        };
+        setInterval(spawnParticle, 300);
+    }
 });
