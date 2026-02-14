@@ -1754,56 +1754,84 @@ footer a:hover {
         /* Remove width limit on small screens */
     }
 
-    /* Mobile Nav Layout - Switch back to Flex for simple Left/Right alignment */
+    /* Mobile Nav Layout - Improve drop-down appearance */
     nav {
         display: flex;
         justify-content: space-between;
-        padding: 0;
+        padding: 0.5rem 0;
+        /* Add slight vertical padding */
+        align-items: center;
     }
 
     nav .logo {
-        height: 45px;
+        height: 40px;
+        /* Slightly smaller logo on mobile */
         margin-left: 0;
     }
 
     .menu-toggle {
         display: block;
+        margin-right: 0;
+        /* Ensure it aligns to the edge */
     }
 
     nav ul {
         display: none;
-        /* start hidden on mobile */
         flex-direction: column;
         position: absolute;
         top: 100%;
-        /* place dropdown directly below the header/nav */
         left: 0;
         width: 100%;
-        background-color: rgba(26, 26, 46, 0.98);
-        padding: 1rem 0;
+        background-color: var(--background-color);
+        /* Use solid background color */
+        padding: 1.5rem 0;
         border-top: 1px solid var(--border-color);
-        box-shadow: 0 12px 20px rgba(0, 0, 0, 0.35);
-        z-index: 10;
-        /* ensure it renders above header contents */
+        border-bottom: 2px solid var(--primary-accent);
+        /* visual anchor */
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        /* Stronger shadow */
+        z-index: 1000;
     }
 
-    /* strengthen specificity for the real menu element */
     #primary-navigation.active {
         display: flex !important;
+        animation: nav-slide-down 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes nav-slide-down {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 
     nav ul li {
         text-align: center;
-        margin-bottom: 1rem;
+        margin-bottom: 0;
+        /* Remove bottom margin, use padding */
+        width: 100%;
     }
 
     nav ul li a {
-        padding: 0.8rem 0;
-        display: inline-block;
+        padding: 1rem 0;
+        display: block;
+        /* Full width click area */
+        font-size: 1.1rem;
+        /* Larger touch target */
+        color: var(--text-color);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
 
-    /* .menu-toggle { display: block; ... } already handled above */
+    nav ul li a:hover {
+        background-color: rgba(255, 255, 255, 0.03);
+    }
 
+    /* General Layout Adjustments */
     .card,
     #faq .faq-item,
     #team .team-group,
@@ -1811,60 +1839,150 @@ footer a:hover {
     #community .housing-info,
     #community .boost-perks {
         padding: 1.5rem;
-        /* Reduce padding on smaller screens */
     }
 
     #home .banner p {
         font-size: 1.1em;
+        padding: 0 1rem;
+        /* Prevent text touching edges */
     }
 
     .cta-button {
         padding: 0.8rem 1.5rem;
         font-size: 1em;
-        min-height: 44px;
+        min-height: 48px;
+        /* Ensure accessible touch target height */
+        width: 100%;
+        /* Full width buttons on mobile usually look better */
+        margin: 0.5rem 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     #community .community-links .cta-button {
-        min-width: 150px;
-        margin: 0.5rem;
+        min-width: unset;
+        /* Remove min-width constraint */
+        width: 100%;
+        margin: 0.5rem 0;
     }
 
-    /* tighten section and header spacing */
+    #community .community-links {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 0 1rem;
+    }
+
+    /* Tighten section spacing */
     section {
-        padding: 3rem 6%;
+        padding: 3rem 1.5rem;
+        /* Reduced horizontal padding */
     }
 
     header {
-        padding: 0.75rem 5%;
-    }
-
-    /* scale hero title for small screens */
-    .hero-title span {
-        font-size: clamp(24px, 7vw, 36px);
-    }
-
-    /* smaller anchor offset on phones */
-    main section[id] {
-        scroll-margin-top: 84px;
+        padding: 0.5rem 1.5rem;
     }
 
     /* Hero adjustments */
-    .hero-inner {
-        padding: 24px 5% 48px 5%;
-        flex-direction: column;
-        align-items: flex-start;
+    .hero-title span {
+        font-size: clamp(32px, 8vw, 42px);
+        /* Slightly larger minimum */
+        text-align: center;
+        margin: 0 auto;
     }
 
     .hero-left {
+        width: 100%;
         max-width: 100%;
+        text-align: center;
+        /* Center align hero text on mobile */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    main section[id] {
+        scroll-margin-top: 80px;
+        /* Adjust for header height */
+    }
+
+    .hero-inner {
+        padding: 100px 1.5rem 60px 1.5rem;
+        /* More top padding for fixed header */
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        min-height: auto;
+        /* Allow height to grow with content */
+        gap: 3rem;
     }
 
     .hero-right {
         margin-left: 0;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        transform: none;
+        /* Remove desktop offset */
+    }
+
+    .event-card-wrapper {
+        width: 100%;
+        max-width: 400px;
+        /* Constrain width */
+        margin: 0 auto;
     }
 
     .event-card-hero {
         width: 100%;
+        padding: 4rem 1.5rem 1.5rem 1.5rem;
+        /* Large top padding to clear the label */
+        height: auto;
+        /* Allow height to grow */
+    }
+
+    /* Footer adjustments */
+    footer {
+        padding: 3rem 1.5rem;
+    }
+
+    /* Rulebook popup adjustments */
+    .rulebook-popup {
+        bottom: 20px;
+        right: 20px;
+        z-index: 10000;
+        /* Ensure it's on top */
+    }
+
+    .rulebook-toggle {
+        width: 48px;
+        height: 48px;
+    }
+}
+
+/* Small mobile devices (iPhone SE, etc) */
+@media (max-width: 380px) {
+    .hero-title span {
+        font-size: 28px;
+    }
+
+    .season-badge {
+        font-size: 0.9rem;
+        padding: 8px 12px;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
+    h2 {
+        font-size: 1.8em;
+    }
+
+    .event-card-hero .event-date {
+        font-size: 1.1rem;
     }
 }
 
