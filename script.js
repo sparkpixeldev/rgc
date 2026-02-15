@@ -71,68 +71,87 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ─────────────────────────────────────
        Event Date → local timezone
     ───────────────────────────────────── */
+    const HAS_EVENT = false; // Toggle this to true when a confirmed event is scheduled
+
     const eventTimeSpan = document.getElementById('event-time');      // optional
     const nextEventDateSpan = document.getElementById('next-event-date'); // required
     const heroEventDate = document.getElementById('hero-next-event-date');
     const heroEventTime = document.getElementById('hero-next-event-time');
-    // Event time: Sunday, Feb 15, 2026 at 12:00 PM in New York (America/New_York)
-    // We compute the equivalent UTC Date to ensure correct local conversion across DST/regions.
-    const getZonedDate = (tz) => {
-        try {
-            // Format parts for the target zone, then construct a Date from those parts as if they are local.
-            const fmt = new Intl.DateTimeFormat('en-US', {
-                timeZone: tz,
-                year: 'numeric', month: '2-digit', day: '2-digit',
-                hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
-            });
-            // Target wall time in New York
-            const target = new Date('2026-02-15T12:00:00'); // interpret later via parts
-            const parts = fmt.formatToParts(target);
-            const map = Object.fromEntries(parts.map(p => [p.type, p.value]));
-            // Build an ISO-like string in the target zone's wall time, then treat as if it's local to get UTC epoch
-            const isoLike = `${map.year}-${map.month}-${map.day}T${map.hour}:${map.minute}:${map.second}`;
-            // Create a date as if user local, then adjust by the offset between user local and target zone at that wall time
-            const localPretend = new Date(isoLike);
-            // Get the actual offset for the target zone by comparing formatted time to UTC
-            const utcFmt = new Intl.DateTimeFormat('en-US', {
-                timeZone: 'UTC', year: 'numeric', month: '2-digit', day: '2-digit',
-                hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
-            });
-            const utcParts = Object.fromEntries(utcFmt.formatToParts(localPretend).map(p => [p.type, p.value]));
-            const utcIso = `${utcParts.year}-${utcParts.month}-${utcParts.day}T${utcParts.hour}:${utcParts.minute}:${utcParts.second}Z`;
-            return new Date(utcIso);
-        } catch (e) {
-            // Fallback: attempt parsing with explicit time zone name (not widely supported in Date constructor)
-            return new Date('2026-02-15T12:00:00-05:00'); // New York EST on Feb 15, 2026
-        }
-    };
 
-    const eventDateEST = getZonedDate('America/New_York');
+    let eventDateEST;
 
-    try {
-        const optsDate = { year: 'numeric', month: 'long', day: 'numeric' };
-        const optsTime = { hour: 'numeric', minute: 'numeric', timeZoneName: 'short' };
-
-        const userLocalDate = eventDateEST.toLocaleDateString(undefined, optsDate);
-        const userLocalTime = eventDateEST.toLocaleTimeString(undefined, optsTime);
-
-        const fullUserDateTime = `${userLocalDate} @ ${userLocalTime}`;
-
-        if (eventTimeSpan) eventTimeSpan.textContent = userLocalTime;
-        if (nextEventDateSpan) nextEventDateSpan.textContent = fullUserDateTime;
-        if (heroEventDate) heroEventDate.textContent = userLocalDate;
-        if (heroEventTime) heroEventTime.textContent = userLocalTime;
-
-        // Also update the banner title
+    if (!HAS_EVENT) {
+        // NO EVENT SCHEDULED STATE
+        if (heroEventDate) heroEventDate.textContent = 'No event scheduled';
+        if (heroEventTime) heroEventTime.textContent = 'Check Discord for updates';
+        if (nextEventDateSpan) nextEventDateSpan.textContent = 'TBD';
+        if (eventTimeSpan) eventTimeSpan.textContent = 'TBD';
+        
         const bannerGlowingText = document.querySelector('#home .banner h1 .glowing-text');
         if (bannerGlowingText) {
-            bannerGlowingText.innerHTML = `🏆 RGC - ${fullUserDateTime}`;
+            bannerGlowingText.innerHTML = `🏆 RGC - No Event Scheduled`;
         }
+    } else {
+        // SCHEDULED EVENT STATE
+        // Event time: Sunday, Feb 15, 2026 at 12:00 PM in New York (America/New_York)
+        // We compute the equivalent UTC Date to ensure correct local conversion across DST/regions.
+        const getZonedDate = (tz) => {
+            try {
+                // Format parts for the target zone, then construct a Date from those parts as if they are local.
+                const fmt = new Intl.DateTimeFormat('en-US', {
+                    timeZone: tz,
+                    year: 'numeric', month: '2-digit', day: '2-digit',
+                    hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
+                });
+                // Target wall time in New York
+                const target = new Date('2026-02-15T12:00:00'); // interpret later via parts
+                const parts = fmt.formatToParts(target);
+                const map = Object.fromEntries(parts.map(p => [p.type, p.value]));
+                // Build an ISO-like string in the target zone's wall time, then treat as if it's local to get UTC epoch
+                const isoLike = `${map.year}-${map.month}-${map.day}T${map.hour}:${map.minute}:${map.second}`;
+                // Create a date as if user local, then adjust by the offset between user local and target zone at that wall time
+                const localPretend = new Date(isoLike);
+                // Get the actual offset for the target zone by comparing formatted time to UTC
+                const utcFmt = new Intl.DateTimeFormat('en-US', {
+                    timeZone: 'UTC', year: 'numeric', month: '2-digit', day: '2-digit',
+                    hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
+                });
+                const utcParts = Object.fromEntries(utcFmt.formatToParts(localPretend).map(p => [p.type, p.value]));
+                const utcIso = `${utcParts.year}-${utcParts.month}-${utcParts.day}T${utcParts.hour}:${utcParts.minute}:${utcParts.second}Z`;
+                return new Date(utcIso);
+            } catch (e) {
+                // Fallback: attempt parsing with explicit time zone name (not widely supported in Date constructor)
+                return new Date('2026-02-15T12:00:00-05:00'); // New York EST on Feb 15, 2026
+            }
+        };
 
-    } catch (err) {
-        console.error('Error formatting event date:', err);
-        if (nextEventDateSpan) {
-            nextEventDateSpan.textContent = 'July 29, 2025 @ 2:00 PM EST (Time-zone conversion error)';
+        eventDateEST = getZonedDate('America/New_York');
+
+        try {
+            const optsDate = { year: 'numeric', month: 'long', day: 'numeric' };
+            const optsTime = { hour: 'numeric', minute: 'numeric', timeZoneName: 'short' };
+
+            const userLocalDate = eventDateEST.toLocaleDateString(undefined, optsDate);
+            const userLocalTime = eventDateEST.toLocaleTimeString(undefined, optsTime);
+
+            const fullUserDateTime = `${userLocalDate} @ ${userLocalTime}`;
+
+            if (eventTimeSpan) eventTimeSpan.textContent = userLocalTime;
+            if (nextEventDateSpan) nextEventDateSpan.textContent = fullUserDateTime;
+            if (heroEventDate) heroEventDate.textContent = userLocalDate;
+            if (heroEventTime) heroEventTime.textContent = userLocalTime;
+
+            // Also update the banner title
+            const bannerGlowingText = document.querySelector('#home .banner h1 .glowing-text');
+            if (bannerGlowingText) {
+                bannerGlowingText.innerHTML = `🏆 RGC - ${fullUserDateTime}`;
+            }
+
+        } catch (err) {
+            console.error('Error formatting event date:', err);
+            if (nextEventDateSpan) {
+                nextEventDateSpan.textContent = 'July 29, 2025 @ 2:00 PM EST (Time-zone conversion error)';
+            }
         }
     }
 
@@ -140,30 +159,37 @@ document.addEventListener('DOMContentLoaded', () => {
        Countdown Timer
     ───────────────────────────────────── */
     const countdownTimerDiv = document.getElementById('countdown-timer');
-    const targetTimestamp = eventDateEST.getTime();
 
-    if (countdownTimerDiv && !Number.isNaN(targetTimestamp)) {
-        const updateCountdown = () => {
-            const now = Date.now();
-            const distance = targetTimestamp - now;
+    if (HAS_EVENT && eventDateEST) {
+        const targetTimestamp = eventDateEST.getTime();
 
-            if (distance <= 0) {
-                countdownTimerDiv.textContent = 'EVENT IS LIVE OR HAS PASSED!';
-                clearInterval(intervalId);
-                return;
-            }
+        if (countdownTimerDiv && !Number.isNaN(targetTimestamp)) {
+            const updateCountdown = () => {
+                const now = Date.now();
+                const distance = targetTimestamp - now;
 
-            const days = Math.floor(distance / 86_400_000);      // 1000*60*60*24
-            const hours = Math.floor((distance % 86_400_000) / 3_600_000);
-            const minutes = Math.floor((distance % 3_600_000) / 60_000);
-            const seconds = Math.floor((distance % 60_000) / 1_000);
+                if (distance <= 0) {
+                    countdownTimerDiv.textContent = 'EVENT IS LIVE OR HAS PASSED!';
+                    clearInterval(intervalId);
+                    return;
+                }
 
-            countdownTimerDiv.textContent =
-                `${days}d ${hours}h ${minutes}m ${seconds}s`;
-        };
+                const days = Math.floor(distance / 86_400_000);      // 1000*60*60*24
+                const hours = Math.floor((distance % 86_400_000) / 3_600_000);
+                const minutes = Math.floor((distance % 3_600_000) / 60_000);
+                const seconds = Math.floor((distance % 60_000) / 1_000);
 
-        updateCountdown();                    // run immediately
-        const intervalId = setInterval(updateCountdown, 1000);
+                countdownTimerDiv.textContent =
+                    `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            };
+
+            updateCountdown();                    // run immediately
+            const intervalId = setInterval(updateCountdown, 1000);
+        }
+    } else {
+        if (countdownTimerDiv) {
+            countdownTimerDiv.textContent = 'No event currently scheduled. Check back soon!';
+        }
     }
 
     /* ─────────────────────────────────────

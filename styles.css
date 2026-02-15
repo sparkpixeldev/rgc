@@ -889,16 +889,13 @@ section#about>blockquote {
 #how-it-works .timeline::before {
     content: '';
     position: absolute;
-    /* Offset the line so it passes through the center of the dots */
-    left: 9px;
+    left: 6px;
     top: 5px;
     bottom: 5px;
     width: 3px;
     /* Thicker line */
     background-color: var(--primary-accent);
-    border-radius: 3px;
-    z-index: 0;
-    /* keep the line behind list items so masks can cover it */
+    border-radius: 0;
 }
 
 #how-it-works .timeline li {
@@ -924,20 +921,6 @@ section#about>blockquote {
     border-radius: 0;
     border: 3px solid var(--background-color);
     box-shadow: 0 0 5px var(--primary-accent);
-}
-
-/* Mask the line after the final dot so it doesn't extend too far down */
-#how-it-works .timeline li:last-child::after {
-    content: '';
-    position: absolute;
-    /* wide cover over the line area; uses section background to hide the line */
-    left: -2rem;
-    width: 40px;
-    /* start just below the dot (dot 15px + 3px border, placed at top:5px) */
-    top: 26px;
-    /* extend past potential collapsed margins */
-    bottom: -2rem;
-    background: var(--background-color);
 }
 
 /* Card Base Styles */
