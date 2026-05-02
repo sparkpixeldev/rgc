@@ -1,0 +1,9 @@
+You must set a valid User-Agent to use Visage.
+
+Q: "Why did this suddenly change?"
+A: Abusive request volume to Visage has greatly increased as of late, tens of millions of requests per day.
+   Visage costs money to run, and so I have to try to keep these things under control.
+
+An example of a good User-Agent is: MyProgramName/2.0 (+https://my.website/myprogramname.html; <me@my.website>)
+
+Please consider supporting me: https://donate.unascribed.com/?project=3
